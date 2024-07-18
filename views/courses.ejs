@@ -1,0 +1,80 @@
+<%- include('partials/head') %>
+
+<main>
+    <!-- Courses Section -->
+    <section class="courses-area pt-150 pb-120 pt-md-100 pb-md-70 pt-xs-100 pb-xs-70">
+        <div class="container">
+
+
+            <div class="category-list mt-5">
+                <h4 class="mb-3">Kategoriler</h4>
+                <ul class="list-inline">
+                    <% for (let i = 0; i < categories.length; i++) { %>
+                        <li class="list-inline-item">
+                            <a href="/courses?categories=<%= categories[i].slug %>" class="btn btn-outline-secondary">
+                                <%= categories[i].title %>
+                            </a>
+                        </li>
+                    <% } %>
+                </ul>
+            </div>
+
+
+            <div class="row justify-content-center">
+                <div class="col-xl-8 col-lg-9">
+                    <div class="section-title text-center mb-55">
+                        <h2>Ders Listesi</h2>
+                    </div>
+                    <form method="GET" id="site-searchform" action="/courses" class="mb-5">
+                        <div class="input-group">
+                            <input class="form-control" name="search" id="search-k" placeholder="Ara..." type="text">
+                            <div class="input-group-append">
+                                <button class="btn btn-primary" id="searchsubmit" value="Search" type="submit">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            
+            <% if (flashMessages) { %>
+                <% if (flashMessages.success) { %>
+                    <div class="alert alert-success">
+                        <%= flashMessages.success %>
+                    </div>
+                <% } else if (flashMessages.error) { %>
+                    <div class="alert alert-danger">
+                        <%= flashMessages.error %>
+                    </div>
+                <% } %>
+            <% } %>
+            
+            <div class="row">
+                <% for (let i = 0; i < courses.length; i++) { %>
+                    <div class="col-lg-4 col-md-6">
+                        <div class="card mb-4">
+                            <div class="card-body text-center">
+                                <img src="/img/icon/course.svg" class="course-icon mb-3" alt="Course Image">
+                                <h5 class="card-title"><%= courses[i].title %></h5>
+                                <p class="card-text"><%= courses[i].description.substring(0, 100) + "..." %></p>
+                                <a href="/courses/<%= courses[i].slug %>" class="btn btn-primary">Dersi Görüntüle</a>
+                            </div>
+                        </div>
+                    </div>
+                <% } %>
+            </div>
+
+            
+        </div>
+    </section>
+</main>
+
+<%- include("partials/footer") %>
+
+<style>
+    .course-icon {
+        width: 50px;
+        height: 50px;
+    }
+</style>

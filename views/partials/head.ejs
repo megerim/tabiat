@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html class="no-js" lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Başakşehir'deki Ayşe Öğretmen Tabiat Anaokulu, çocuklarınıza doğayla iç içe, güvenli ve eğitici bir ortam sunar. Tabiata saygılı nesiller yetiştiriyoruz.">
+    <meta name="keywords"
+        content="Başakşehir anaokulu, Ayşe Öğretmen Tabiat Anaokulu, çocuk eğitimi, tabiat eğitimi, çocuk gelişimi, doğa ile eğitim">
+    <meta name="author" content="Ayşe Öğretmen Tabiat Anaokulu">
+    <title>Tabiat Anaokulu</title>
+
+    <link rel="manifest" href="site.webmanifest">
+    <link rel="shortcut icon" type="image/x-icon" href="/img/favicon.png">
+    <!-- Place favicon.ico in the root directory -->
+
+    <!-- CSS here -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="/css/animate.css">
+    <link rel="stylesheet" href="/css/magnific-popup.css">
+    <link rel="stylesheet" href="/css/all.min.css">
+    <link rel="stylesheet" href="/css/flaticon.css">
+    <link rel="stylesheet" href="/css/font.css">
+    <link rel="stylesheet" href="/css/metisMenu.css">
+    <link rel="stylesheet" href="/css/nice-select.css">
+    <link rel="stylesheet" href="/css/slick.css">
+    <link rel="stylesheet" href="/css/spacing.css">
+    <link href='https://fullcalendar.io/releases/fullcalendar/3.10.2/fullcalendar.min.css' rel='stylesheet' />
+<script src='https://fullcalendar.io/releases/fullcalendar/3.10.2/fullcalendar.min.js'></script>
+    <link rel="stylesheet" href="/css/main.css">
+</head>
+
+<body>
+    <!--[if lte IE 9]>
+            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
+        <![endif]-->
+
+    <!-- Add your site or application content here -->
+    <!-- preloader -->
+    <div id="preloader">
+        <div class="preloader">
+            <span></span>
+            <span></span>
+        </div>
+    </div>
+    <!-- preloader end  -->
+
+
+    <header>
+        <div id="theme-menu-two" class="main-header-area pl-100 pr-100 pt-20 pb-15">
+            <div class="container-fluid">
+                <div class="row align-items-center">
+                    <div class="col-xl-2 col-lg-2 col-5">
+                        <div class="logo"><a href="/"><img src="/img/logo/logo2.png" alt=""></a></div>
+
+                    </div>
+                    <div class="col-xl-7 col-lg-8 d-none d-lg-block">
+                        <%- include('./nav') %>
+                    </div>
+                    <div class="col-xl-3 col-lg-2 col-7">
+                        <div class="right-nav d-flex align-items-center justify-content-end">
+                            <div class="right-btn mr-25 mr-xs-15">
+                                <ul class="d-flex align-items-center">
+                                    <li><a href="/contact" class="theme_btn free_btn"> <img class="phone-svg"
+                                                src="/img/icon/phone-alt.svg" alt=""> İletişim</a></li>
+                                   <% if (!userIN) { %>
+                                                <li><a class="sign-in ml-20" href="/login"><img src="/img/icon/user.svg" alt=""></a>
+                                    </li>
+                                    <% } else { %>
+                                        <li><a href="/users/logout" class="sign-out ml-20"><img src="/img/icon/logout.svg" alt=""></a></li>
+                                    <% } %>
+                                </ul>
+                            </div>
+                            <div class="hamburger-menu d-md-inline-block d-lg-none text-right">
+                                <a href="javascript:void(0);">
+                                    <i class="far fa-bars"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> <!-- /.theme-main-menu -->
+    </header>
+    <!-- slide-bar start -->
+    <aside class="slide-bar">
+        <div class="close-mobile-menu">
+            <a href="javascript:void(0);"><i class="fas fa-times"></i></a>
+        </div>
+
+        <!-- offset-sidebar start -->
+        <div class="offset-sidebar">
+            <div class="offset-widget offset-logo mb-30">
+                <a href="/">
+                    <img src="/img/logo/header_logo_one.svg" alt="logo">
+                </a>
+            </div>
+            <div class="offset-widget mb-40">
+                <div class="info-widget">
+                    <h4 class="offset-title mb-20">About Us</h4>
+                    <p class="mb-30">
+                        But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain
+                        was born and will give you a complete account of the system and expound the actual teachings of
+                        the great explore
+                    </p>
+                    <a class="theme_btn theme_btn_bg" href="/contact">Contact Us</a>
+                </div>
+            </div>
+            <div class="offset-widget mb-30 pr-10">
+                <div class="info-widget info-widget2">
+                    <h4 class="offset-title mb-20">Contact Info</h4>
+                    <p> <i class="fal fa-address-book"></i> 23/A, Miranda City Likaoli Prikano, Dope</p>
+                    <p> <i class="fal fa-phone"></i> +0989 7876 9865 9 </p>
+                    <p> <i class="fal fa-envelope-open"></i> info@example.com </p>
+                </div>
+            </div>
+        </div>
+        <!-- offset-sidebar end -->
+
+        <!-- side-mobile-menu start -->
+        <nav class="side-mobile-menu">
+            <ul id="mobile-menu-active">
+                <li><a href="/">Ana Sayfa</a></li>
+
+                <li><a href="/about">Hakkımızda</a></li>
+
+                <li><a href="/blog">Blog</a></li>
+
+                <li><a href="/contact">İletişim</a></li>
+            </ul>
+        </nav>
+        <!-- side-mobile-menu end -->
+    </aside>
+    <div class="body-overlay"></div>
+    <!-- slide-bar end -->
