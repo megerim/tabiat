@@ -10,7 +10,6 @@ const pageRouter = require("./routes/pageRoute");
 const courseRouter = require("./routes/courseRoute");
 const categoryRouter = require("./routes/categoryRoute");
 const userRouter = require("./routes/userRoute");
-const blogRouter = require("./routes/blogRoute"); // Import the blog routes
 
 const app = express();
 
@@ -58,7 +57,6 @@ app.use("/", pageRouter);
 app.use("/courses", courseRouter);
 app.use("/categories", categoryRouter);
 app.use("/users", userRouter);
-app.use("/blog", blogRouter); // Use the blog routes with the base URL /blogs
 
 const port = 3000;
 app.listen(port, () => {

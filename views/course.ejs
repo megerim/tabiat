@@ -10,14 +10,12 @@
                 <div class="row">
                     <div class="col-lg-8">
                         <div class="blog-details-box mb-45">
-                            <h2>ORYANTASYON SÜRECİ
+                            <h2><%= course.title %>
                             </h2>
                             <ul class="blogs__meta mb-30">
-                                <li><span class="blog-author">Tabiat Anaokulu</span></li>
+                                <li><span class="blog-author"><%= course.user %></span></li>
                                 <li><span><img src="/img/icon/material-date-range.svg" alt="mate-date">
-                                        01.01.2024</span></li>
-                                <li><span><img src="/img/icon/material-access-time.svg" alt="mate-date"> 03</span></li>
-                                <li> <span><img src="/img/icon/material-comment.svg" alt="mate-date"> 5 Min</span></li>
+                                        <%= course.createdAt %></span></li>
                                 <li>
                                     <div class="social-media blog-details-social">
                                         <a href="#"><i class="fab fa-facebook-f"></i></a>
@@ -27,131 +25,11 @@
                                     </div>
                                 </li>
                             </ul>
-                            <img class="img-fluid blog-details-img mb-35" src="/img/blog/16.jpg" alt="blog-details-img">
-                            <h3 class="blog-details-title mb-30"> <%= course.title %></h3>
+
                             <p>
-                                Ebeveynler ve çocuklar arasında gerçekleştirilen bir hazırlık sürecidir. Bu süreç
-                                çocukların yeni bir ortama, deneyim ve rutinlere uyum göstermelerine yardımcı olarak
-                                çocukların okul öncesi eğitim deneyimlerine başlamadan önce pozitif bir deneyim
-                                yaşamalarını olanak tanımaktadır. Anaokulunda oryantasyon sürecinde çocuklar okula
-                                başlamadan önce okul ortamına uyum sağlamalarına yardımcı olmak için dikkatle ve özenle
-                                planlanıp uygulanmalıdır. Söz konusu ebeveynlere anaokulunda oryantasyon sürecinin nasıl
-                                olması gerektiğine dair bazı temel öneriler:
+                                <%= course.description %>
 
                             </p>
-                        </div>
-                        <div class="blog-quote-box mb-45">
-                            <div class="quote-icon">
-                                <img src="/img/icon/quote.svg" alt="quote-icon">
-                            </div>
-                            <div class="quote__text">
-                                <p>
-                                    Ebeveyn iş birliği ve iletişim oldukça önem arz etmektedir. Okula başlamadan önce,
-                                    ebeveynlerle düzenli iletişim kurulmalıdır. Okulun prosedürleri anlatılarak
-                                    ebeveynlerin okula dair soruları veya endişeleri giderilmesi oldukça önem
-                                    taşımaktadır. Ebeveynlere, okulun amacı, vizyonu, programı, kuralları, rutinleri ve
-                                    güvenlik önlemleri gibi konularda görüşme sağlanmalıdır. Söz konusu bu görüşmede
-                                    okulun fiziksel ortamı da ebeveynlere gösterilerek, okulun hangi alanlardan oluştuğu
-                                    hakkında bilgi verilmelidir.
-                                </p>
-                                <h6>- Tabiat Anaokulu</h6>
-                            </div>
-                        </div>
-                        <div class="blog-details-text mb-30">
-                            <p>
-                                Çocuklar, mutlaka okulu ziyaret etmeli okul ortamını görmeli, keşfetmeli ve öğretmeni
-                                ile tanışmalıdır. Çocuklara, okulunu ve oyun alanlarını gezdirilerek, okula uyum
-                                süreçlerine destek olmak gerekmektedir.
-                            </p>
-                        </div>
-                        <div class="blog-details-text row gx-2 mb-45">
-                            <div class="col-lg-4 col-md-4 col-sm-6">
-                                <div class="blog-details-img-box mb-30">
-                                    <img class="img-fluid" src="/img/blog/17.jpg" alt="">
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-md-4 col-sm-6">
-                                <div class="blog-details-img-box mb-30">
-                                    <img class="img-fluid" src="/img/blog/18.jpg" alt="">
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-md-4 col-sm-6">
-                                <div class="blog-details-img-box mb-30">
-                                    <img class="img-fluid" src="/img/blog/18.jpg" alt="">
-                                </div>
-                            </div>
-                            <p>
-                                Bu süreç kademeli bir başlangıç gerektirmektedir. Yani çocuklara, okula kademeli olarak
-                                başlama olanağı verilmesi önemlidir. Örneğin, çocuklar birkaç saatlik kısa süreli
-                                ziyaretlerle başlaması ve zamanla bu süre artırılması gerekmektedir. Bu, çocukların yeni
-                                ortama, öğretmenlere ve diğer çocukları benimsemesine olanak tanımaktadır.
-
-                            </p>
-                        </div>
-                        <div class="blog-details-video">
-                            <p class="mb-30">
-                                Okula başlayacak olan çocuklara bu süreçte okulun kuralları, çocuklara açıklanmalı ve
-                                çocukların bu rutinlere ve kurallara uygun davranışlar geliştirmeleri teşvik
-                                edilmelidir. Çocuklara, okulun beklentileri, güvenliğe ilişkin kurallar ve sınıf
-                                rutinleri gibi konularda bilgi verilmelidir. Örneğin; Okulun rutin programı olan
-                                beslenme, uyku düzeni ve kuralları eğlenceli bir şekilde evde uygulamaya çalışmak süreci
-                                daha sağlıklı geçirmeye fırsat vermektedir. </p>
-                            <div class="video-details-area mb-30" style="background-image: url(/img/blog/20.jpg);">
-                                <a href="https://www.youtube.com/watch?v=7omGYwdcS04" class="popup-video"><i
-                                        class="fas fa-play"></i></a>
-                            </div>
-                            <p>There are many variations of passages of Lorem Ipsum available, but the majority have
-                                suffered alteration in some form, by injected humour, or randomised words which don't
-                                look even slightly believable.There are many variations of passages of Lorem Ipsum
-                                available.</p>
-                            <ul class="blog-details-list mt-30">
-                                <li>There are many variations of passages of Lorem Ipsum available, but the majority
-                                    have
-                                    ration in some form, by injected humour, or randomised words which don't look even
-                                    slightly believable.</li>
-                                <li>There are many variations of passages of Lorem Ipsum available, but the majority
-                                    have
-                                    ration in some form, by injected humour, or randomised words which don't look even
-                                    slightly believable.</li>
-                                <li>There are many variations of passages of Lorem Ipsum available, but the majority
-                                    have
-                                    ration in some form, by injected humour, or randomised words which don't look even
-                                    slightly believable.</li>
-                            </ul>
-                        </div>
-                        <div class="blog-details-gallery row gx-2 mb-45">
-                            <div class="col-lg-8 col-md-8">
-                                <div class="blog-details-img-box mb-30">
-                                    <img class="img-fluid" src="/img/blog/21.jpg" alt="">
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-md-4">
-                                <div class="blog-details-img-box mb-30">
-                                    <img class="img-fluid" src="/img/blog/22.jpg" alt="">
-                                </div>
-                            </div>
-                        </div>
-                        <!-- <div class="blog-details-author row gx-2 align-items-center mb-45">
-                            <div class="col-lg-6">
-                                <div class="author__box mb-30">
-                                    <img class="author-img" src="/img/blog/23.jpg" alt="">
-                                    <div class="author__box-text">
-                                        <h4 class="sub-tilte">Jason Momoa</h4>
-                                        <p>Admin</p>
-                                    </div>
-                                </div>
-                            </div>
-                           <div class="col-lg-6">
-                                <div class="social-media blog-details-social mb-30">
-                                    <a href="#"><i class="fab fa-facebook-f"></i></a>
-                                    <a href="#"><i class="fas fa-basketball-ball"></i></a>
-                                    <a href="#"><i class="fab fa-youtube"></i></a>
-                                    <a href="#"><i class="fab fa-pinterest-p"></i></a>
-                                </div>
-                           </div>
-                        </div> -->
-                        <div class="row">
-
                         </div>
 
 
@@ -159,84 +37,33 @@
                     <div class="col-lg-4">
                         <div class="blog-widget-area">
                             <div class="widget mb-50">
-                                <div class="blog-search-widget">
-
-<% if (user && !(user.courses.includes(course._id))) {  %>
-                                    <form method="POST" action="/courses/enroll" >
-                                        <input type="hidden" name="course_id" value="<%= course._id %>">
-                                       <button class="btn btn-lg" type="submit"><span>Başla</span></button>
-                                    </form>
-
-<% } %>
-                                </div>
-                            </div>
-                            <div class="widget mb-50">
                                 <div class="blog-categories-widget">
                                     <h4 class="sub-title pb-20 mb-25 pt-25">Kategoriler</h4>
                                     <div class="courses-tag-btn cat-btn">
-                                        <a href="#">Kategori 1</a>
-                                        <a href="#">Kategori 2</a>
-                                        <a href="#">Kategori 3</a>
-                                        <a href="#">Kategori 4</a>
-                                        <a href="#">Kategori 5</a>
-                                        <a href="#">Kategori 6</a>
-                                        <a href="#">Kategori 7</a>
-                                        <a href="#">Kategori 8</a>
+
+                                        <% for (let i = 0; i < categories.length; i++) { %>
+                                                    <a href="/courses?categories=<%= categories[i].slug %>"><%= categories[i].title %></a>
+
+                                        <% } %>
                                     </div>
                                 </div>
                             </div>
                             <div class="widget mb-50">
                                 <div class="blog-categories-widget">
-                                    <h4 class="sub-title pb-20 mb-25 pt-25">Recent Post</h4>
+                                    <h4 class="sub-title pb-20 mb-25 pt-25">Diğer Yazılarımız</h4>
                                     <ul class="blog-recent-post">
+                                        <% for (let i = 0; i < 4; i++) { %>
                                         <li>
+                                            <a href="/courses/<%= courses[i].slug %>">
                                             <div class="posts mb-20">
                                                 <img src="/img/blog/24.jpg" alt="" class="posts__thumb mb-15">
-                                                <p>1st July , 2021</p>
-                                                <h6><a href="blog-details.html">Lorem Ipsum is simply dummy text</a>
+                                                <p><%= courses[i].title %></p>
+                                                <h6><%= courses[i].description %>
                                                 </h6>
                                             </div>
+                                        </a>
                                         </li>
-                                        <li>
-                                            <div class="posts mb-20">
-                                                <img src="/img/blog/25.jpg" alt="" class="posts__thumb mb-15">
-                                                <p>1st July , 2021</p>
-                                                <h6><a href="blog-details.html">Ipsum Lorem is simply dummy text</a>
-                                                </h6>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="posts mb-20">
-                                                <img src="/img/blog/26.jpg" alt="" class="posts__thumb mb-15">
-                                                <p>1st July , 2021</p>
-                                                <h6><a href="blog-details.html">Lorem Ipsum is simply dummy text</a>
-                                                </h6>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="posts mb-20">
-                                                <img src="/img/blog/27.jpg" alt="" class="posts__thumb mb-15">
-                                                <p>1st July , 2021</p>
-                                                <h6><a href="blog-details.html">Ipsum Lorem is simply dummy text</a>
-                                                </h6>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="posts mb-20">
-                                                <img src="/img/blog/28.jpg" alt="" class="posts__thumb mb-15">
-                                                <p>1st July , 2021</p>
-                                                <h6><a href="blog-details.html">Lorem Ipsum is simply dummy text</a>
-                                                </h6>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="posts mb-20">
-                                                <img src="/img/blog/29.jpg" alt="" class="posts__thumb mb-15">
-                                                <p>1st July , 2021</p>
-                                                <h6><a href="blog-details.html">Ipsum Lorem is simply dummy text</a>
-                                                </h6>
-                                            </div>
-                                        </li>
+                                        <% } %>
                                     </ul>
                                 </div>
                             </div>
@@ -248,20 +75,6 @@
                                         <a href="#"><i class="fas fa-basketball-ball"></i></a>
                                         <a href="#"><i class="fab fa-youtube"></i></a>
                                         <a href="#"><i class="fab fa-pinterest-p"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="widget mb-50">
-                                <div class="blog-categories-widget">
-                                    <h4 class="sub-title pb-20 mb-25 pt-25">Tags</h4>
-                                    <div class="courses-tag-btn cat-btn tag-btn">
-                                        <a href="#">Online Class</a>
-                                        <a href="#">Skill Share</a>
-                                        <a href="#">Web Learn</a>
-                                        <a href="#">Development</a>
-                                        <a href="#">Direction</a>
-                                        <a href="#">Certificate</a>
                                     </div>
                                 </div>
                             </div>

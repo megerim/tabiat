@@ -46,7 +46,20 @@
                 </div>
             </div>
         </section>
+        <div class="container">
+        <% if(flashMessages) { %>
 
+            <% if(flashMessages.success) { %>
+                <div class="alert alert-success">
+                    <%= flashMessages.success %>
+                </div>
+            <% } else if(flashMessages.error){ %>
+            <div class="alert alert-danger">
+                <%= flashMessages.error %>
+            </div>
+                <% } %>
+            <% } %>
+        </div>
         <!-- Calendar Section -->
         <div class="container-fluid">
             <h3>Haftalık Takvim</h3>
@@ -65,43 +78,43 @@
                     <h5>Pazartesi</h5>
                     <div class="day-part">Sabah</div>
                     <div class="day-part">Öğleden Sonra</div>
-                    <div class="day-part">Akşam</div>
+                    <div class="day-part">Akşam Üstü</div>
                 </div>
                 <div class="day">
                     <h5>Salı</h5>
                     <div class="day-part">Sabah</div>
                     <div class="day-part">Öğleden Sonra</div>
-                    <div class="day-part">Akşam</div>
+                    <div class="day-part">Akşam Üstü</div>
                 </div>
                 <div class="day">
                     <h5>Çarşamba</h5>
                     <div class="day-part">Sabah</div>
                     <div class="day-part">Öğleden Sonra</div>
-                    <div class="day-part">Akşam</div>
+                    <div class="day-part">Akşam Üstü</div>
                 </div>
                 <div class="day">
                     <h5>Perşembe</h5>
                     <div class="day-part">Sabah</div>
                     <div class="day-part">Öğleden Sonra</div>
-                    <div class="day-part">Akşam</div>
+                    <div class="day-part">Akşam Üstü</div>
                 </div>
                 <div class="day">
                     <h5>Cuma</h5>
                     <div class="day-part">Sabah</div>
                     <div class="day-part">Öğleden Sonra</div>
-                    <div class="day-part">Akşam</div>
+                    <div class="day-part">Akşam Üstü</div>
                 </div>
                 <div class="day">
                     <h5>Cumartesi</h5>
                     <div class="day-part">Sabah</div>
                     <div class="day-part">Öğleden Sonra</div>
-                    <div class="day-part">Akşam</div>
+                    <div class="day-part">Akşam Üstü</div>
                 </div>
                 <div class="day">
                     <h5>Pazar</h5>
                     <div class="day-part">Sabah</div>
                     <div class="day-part">Öğleden Sonra</div>
-                    <div class="day-part">Akşam</div>
+                    <div class="day-part">Akşam Üstü</div>
                 </div>
             </div>
         </div>
@@ -154,16 +167,16 @@
     </div>
     
 
-    <% if (user.role === 'teacher') { %>
+    <% if (user.role === 'admin') { %>
         <!-- Courses Section -->
         <div class="container">
-            <h3 class="mb-4">Dersleriniz</h3>
+            <h3 class="mb-4">Blog Yazıları</h3>
             <% courses.forEach(course => { %>
                 <div class="card mb-3">
                     <div class="card-body">
                         <h5 class="card-title"><%= course.title %></h5>
-                        <p class="card-text"><%= course.description %></p>
-                        <a href="/courses/<%= course.slug %>?_method=PUT" class="btn btn-outline-primary mr-2">Görüntüle</a>
+                        <p class="card-text"><%= course.description.substring(0, 100) + "..." %></p>
+                        <a href="/courses/<%= course.slug %>" class="btn btn-outline-primary mr-2">Görüntüle</a>
                         <button class="btn btn-outline-warning mr-2" data-toggle="modal" data-target="#updateCourse<%= course.slug %>">Düzenle</button>
                         <a href="/courses/<%= course.slug %>?_method=DELETE" class="btn btn-outline-danger" onclick="return confirm('Emin misiniz?')">Sil</a>
                     </div>
@@ -180,7 +193,7 @@
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <form method="POST" action="/courses" id="add-course-form">
+                                <form method="PUT" action="/courses" id="add-course-form">
                                     <div class="form-group">
                                         <label for="course-name">Ders Adı</label>
                                         <input type="text" class="form-control" id="title" name="title" value="<%= course.title %>" required>
@@ -225,35 +238,11 @@
                     </li>
                 <% }); %>
             </ul>
-            <a href="#" data-toggle="modal" data-target="#courseModal" class="btn btn-success mt-4">Yeni Ders Ekle</a>
+            <a href="#" data-toggle="modal" data-target="#courseModal" class="btn btn-success mt-4">Yeni Yazı Ekle</a>
         </div>
     <% } %>
 
     <% if (user.role === 'admin') { %>
-        <!-- Registered Courses Section -->
-        <div class="container">
-            <div class="row">
-            <h3>Blog Yazıları</h3>
-            <a href="/blog/new" class="btn btn-primary">Add New Post</a>
-        </div>
-        <div class="row">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th scope="col">ID#</th>
-                        <th scope="col">Delete</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <% for (let i = 0; i < blogs.length; i++) { %>
-                        <tr>
-                            <th scope="row"><%= blogs[i].title %></th>
-                            <td><a href="/blogs/<%= blogs[i]._id %>?_method=DELETE" onclick="return confirm('ARE YOU SURE')" class="btn btn-danger rounded-0 text-white"><span>DELETE</span></a></td>
-                        </tr>
-                    <% } %>
-                </tbody>
-            </table>
-        </div>
         <div class="container">
             <h3>Kategoriler</h3>
             <a href="#" data-toggle="modal" data-target="#addCategory" class="btn btn-success mt-4">Kategori Ekle</a>
@@ -267,7 +256,7 @@
                 <tbody>
                     <% for (let i = 0; i < categories.length; i++) { %>
                         <tr>
-                            <th scope="row"><%= categories[i].title %></th>
+                            <td scope="row"><%= categories[i].title %></td>
                             <td><a href="/categories/<%= categories[i]._id %>?_method=DELETE" onclick="return confirm('ARE YOU SURE')" class="btn btn-danger rounded-0 text-white"><span>DELETE</span></a></td>
                         </tr>
                     <% } %>
@@ -276,7 +265,7 @@
         </div>
 
         <div class="container">
-            <h3>Öğrenciler</h3>
+            <h3>Öğrenci Hesapları</h3>
             <table class="table">
                 <thead>
                     <tr>
@@ -300,7 +289,7 @@
         </div>
 
         <div class="container">
-            <h3>Öğretmenler</h3>
+            <h3>Öğretmen Hesapları</h3>
             <table class="table">
                 <thead>
                     <tr>

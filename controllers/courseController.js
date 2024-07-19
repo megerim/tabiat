@@ -56,6 +56,7 @@ exports.getAllCourses = async (req, res) => {
 exports.getCourse = async (req, res) => {
   try {
     const user = await User.findById(req.session.userID);
+    const courses = await Course.find();
     const course = await Course.findOne({ slug: req.params.slug });
     const categories = await Category.find();
 
@@ -66,6 +67,7 @@ exports.getCourse = async (req, res) => {
       course,
       user,
       categories,
+      courses,
       title: "Kurs Detayı",
     });
   } catch {
@@ -102,7 +104,7 @@ exports.deleteCourse = async (req, res) => {
   try {
     const course = await Course.findOneAndDelete({ slug: req.params.slug });
     await User.deleteMany({ courses: req.params.id });
-    req.flash("error", `${course.title} başarıyla silindi. `);
+    req.flash("success", `${course.title} isimli blog yazısı başarıyla silindi. `);
     res.status(200).redirect("/users/dashboard");
   } catch {
     res.status(400).json({

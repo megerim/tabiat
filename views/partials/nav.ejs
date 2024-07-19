@@ -5,25 +5,21 @@
 
                 <li class="nav-item">
                     <a class="nav-link" href="/" id="navbarDropdown5" role="button"
-                        aria-expanded="false"> <span class="<%= title==='Ana Sayfa' && 'activeLink' %>">Giriş</span></a>
+                        aria-expanded="false"> <span class="<%= title==='Ana Sayfa' && 'activeLink' %>">Ana Sayfa</span></a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/about" id="navbarDropdown5" role="button"
                         aria-expanded="false"><span class="<%= title==='Hakkımızda' && 'activeLink' %>">Hakkımızda</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/blog" id="navbarDropdown5" role="button"
-                        aria-expanded="false"><span class="<%= title==='Blog' && 'activeLink' %>">Blog</span></a>
-                </li>
-                <li class="nav-item">
                     <a class="nav-link" href="/galeri" id="navbarDropdown5" role="button"
                     aria-expanded="false"><span class="<%= title==='Galeri' && 'activeLink' %>">Galeri</span></a>
                 </li>
-                <% if(userIN){ %>
                 <li class="nav-item">
                     <a class="nav-link" href="/courses" id="navbarDropdown5" role="button"
-                        aria-expanded="false"><span class="<%= title==='Courses' && 'activeLink' %>">Dersler</span></a>
+                        aria-expanded="false"><span class="<%= title==='Courses' && 'activeLink' %>">Blog</span></a>
                 </li>
+                <% if(userIN){ %>
                 <li class="nav-item">
                     <a class="nav-link" href="/users/dashboard" id="navbarDropdown5" role="button"
                         aria-expanded="false"><span class="<%= title==='Dashboard' && 'activeLink' %>">Panel</span></a>

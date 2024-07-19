@@ -3,7 +3,6 @@ const bcrypt = require("bcrypt");
 const User = require("../models/User");
 const Category = require("../models/Category");
 const Course = require("../models/Course");
-const Blog = require("../models/Blog");
 
 
 
@@ -61,9 +60,8 @@ exports.logoutUser = (req, res) => {
 exports.getDashboardPage = async (req, res) => {
   const user = await User.findById(req.session.userID).populate("courses");
   const categories = await Category.find();
-  const courses = await Course.find({ user: req.session.userID });
+  const courses = await Course.find();
   const users = await User.find();
-  const blogs = await Blog.find();
   
   
   // Filter users by role
@@ -78,7 +76,6 @@ exports.getDashboardPage = async (req, res) => {
     users,
     students,
     teachers,
-    blogs,
   });
 };
 
