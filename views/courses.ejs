@@ -58,14 +58,10 @@
                             <a href="/courses/<%= courses[i].slug %>"><img src="/img/slider/bg10.png" alt="blog-img"></a>
                             </div>
                             <div class="z-blogs__content">
-                                <h5 class="mb-25">Kategori</h5>
+                                <h5 class="mb-25"><%= courses[i].category %></h5>
                                 <h4 class="sub-title mb-15"><a href="/courses/<%= courses[i].slug %>"><%= courses[i].title %>
                                 </a></h4>
                                 <p><%= courses[i].description.substring(0, 100) + "..." %></p>
-                                <div class="z-blogs__meta d-sm-flex justify-content-between pt-20">
-                                    <span><%= courses[i].createdAt %></span>
-                                    
-                                </div>
                             </div>
                         </div>
                     </div>

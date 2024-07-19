@@ -15,7 +15,7 @@
                             <ul class="blogs__meta mb-30">
                                 <li><span class="blog-author"><%= course.user %></span></li>
                                 <li><span><img src="/img/icon/material-date-range.svg" alt="mate-date">
-                                        <%= course.createdAt %></span></li>
+                                        <%= new Date(course.createdAt).toISOString().split('T')[0] %></span></li>
                                 <li>
                                     <div class="social-media blog-details-social">
                                         <a href="#"><i class="fab fa-facebook-f"></i></a>
