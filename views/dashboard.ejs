@@ -27,7 +27,6 @@
 
 <main>
 
-    <% if (user.role === 'teacher' || user.role === 'student' || user.role === 'admin') { %>
         <!-- Dashboard Title Area -->
         <section class="dashboard-title-area pt-150 pb-120 pt-md-100 pb-md-70 pt-xs-100 pb-xs-70">
             <div class="container">
@@ -50,6 +49,17 @@
 
         <!-- Calendar Section -->
         <div class="container-fluid">
+            <h3>Haftalık Takvim</h3>
+
+            <% if (user.role === 'teacher' || user.role === 'admin') { %>
+                <!-- Add Event Button -->
+                <div class="container mt-4">
+                    <button class="btn btn-outline-success mb-4" data-toggle="modal" data-target="#addEventModal">Ekle</button>
+                    <button class="btn btn-outline-warning mb-4" data-toggle="modal" data-target="#addEventModal">Düzenle</button>
+                </div>
+            <% } %>
+
+
             <div class="calendar">
                 <div class="day">
                     <h5>Pazartesi</h5>
@@ -95,7 +105,6 @@
                 </div>
             </div>
         </div>
-    <% } %>
 
     <!-- Add Event Modal -->
     <div class="modal fade" id="addEventModal" tabindex="-1" role="dialog" aria-labelledby="addEventModalLabel" aria-hidden="true">
@@ -109,28 +118,41 @@
                 </div>
                 <div class="modal-body">
                     <form id="addEventForm">
-                        <div class="form-group">
-                            <label for="event-title">Etkinlik Başlığı</label>
-                            <input type="text" class="form-control" id="event-title" name="title" required>
+                        <div class="form-group row">
+                            <div class="form-group col-md-6">
+                                <label for="event-day">Gün</label>
+                                <select class="form-control" id="event-day" name="day" required>
+                                    <option value="pazartesi">Pazartesi</option>
+                                    <option value="salı">Salı</option>
+                                    <option value="çarşamba">Çarşamba</option>
+                                    <option value="perşembe">Perşembe</option>
+                                    <option value="cuma">Cuma</option>
+                                    <option value="cumartesi">Cumartesi</option>
+                                    <option value="pazar">Pazar</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="event-time">Zaman</label>
+                                <select class="form-control" id="event-time" name="time" required>
+                                    <option value="morning">Sabah</option>
+                                    <option value="lunch">Öğle</option>
+                                    <option value="afternoon">Öğleden Sonra</option>
+                                </select>
+                            </div>
                         </div>
                         <div class="form-group">
-                            <label for="event-date">Tarih</label>
-                            <input type="date" class="form-control" id="event-date" name="date" required>
+                            <label for="event-description">Açıklama</label>
+                            <textarea class="form-control" id="event-description" name="description" rows="3"></textarea>
                         </div>
-                        <div class="form-group">
-                            <label for="event-time">Zaman</label>
-                            <select class="form-control" id="event-time" name="time" required>
-                                <option value="morning">Sabah</option>
-                                <option value="lunch">Öğle</option>
-                                <option value="afternoon">Öğleden Sonra</option>
-                            </select>
+                        <div class="text-right">
+                            <button type="submit" class="btn btn-primary">Kaydet</button>
                         </div>
-                        <button type="submit" class="btn btn-primary">Etkinliği Kaydet</button>
                     </form>
                 </div>
             </div>
         </div>
     </div>
+    
 
     <% if (user.role === 'teacher') { %>
         <!-- Courses Section -->
@@ -210,9 +232,31 @@
     <% if (user.role === 'admin') { %>
         <!-- Registered Courses Section -->
         <div class="container">
+            <div class="row">
+            <h3>Blog Yazıları</h3>
+            <a href="/blog/new" class="btn btn-primary">Add New Post</a>
+        </div>
+        <div class="row">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">ID#</th>
+                        <th scope="col">Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% for (let i = 0; i < blogs.length; i++) { %>
+                        <tr>
+                            <th scope="row"><%= blogs[i].title %></th>
+                            <td><a href="/blogs/<%= blogs[i]._id %>?_method=DELETE" onclick="return confirm('ARE YOU SURE')" class="btn btn-danger rounded-0 text-white"><span>DELETE</span></a></td>
+                        </tr>
+                    <% } %>
+                </tbody>
+            </table>
+        </div>
+        <div class="container">
             <h3>Kategoriler</h3>
             <a href="#" data-toggle="modal" data-target="#addCategory" class="btn btn-success mt-4">Kategori Ekle</a>
-            <a href="#" data-toggle="modal" data-target="#deleteCourse" class="btn btn-danger mt-4">Kategori Sil</a>
             <table class="table">
                 <thead>
                     <tr>
@@ -233,8 +277,6 @@
 
         <div class="container">
             <h3>Öğrenciler</h3>
-            <a href="#" data-toggle="modal" data-target="#deleteCourse" class="btn btn-success mt-4">Öğrenci Ekle</a>
-            <a href="#" data-toggle="modal" data-target="#deleteCourse" class="btn btn-danger mt-4">Öğrenci Sil</a>
             <table class="table">
                 <thead>
                     <tr>
@@ -259,8 +301,6 @@
 
         <div class="container">
             <h3>Öğretmenler</h3>
-            <a href="#" data-toggle="modal" data-target="#deleteCourse" class="btn btn-success mt-4">Öğretmen Ekle</a>
-            <a href="#" data-toggle="modal" data-target="#deleteCourse" class="btn btn-danger mt-4">Öğretmen Sil</a>
             <table class="table">
                 <thead>
                     <tr>

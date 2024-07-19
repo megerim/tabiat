@@ -1,8 +1,10 @@
+const { validationResult } = require("express-validator");
 const bcrypt = require("bcrypt");
 const User = require("../models/User");
 const Category = require("../models/Category");
 const Course = require("../models/Course");
-const { validationResult } = require("express-validator");
+const Blog = require("../models/Blog");
+
 
 
 exports.createUser = async (req, res) => {
@@ -61,6 +63,8 @@ exports.getDashboardPage = async (req, res) => {
   const categories = await Category.find();
   const courses = await Course.find({ user: req.session.userID });
   const users = await User.find();
+  const blogs = await Blog.find();
+  
   
   // Filter users by role
   const students = users.filter(u => u.role === "student");
@@ -74,6 +78,7 @@ exports.getDashboardPage = async (req, res) => {
     users,
     students,
     teachers,
+    blogs,
   });
 };
 
