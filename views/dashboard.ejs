@@ -75,49 +75,34 @@
 
 
             <div class="calendar">
-                <div class="day">
-                    <h5>Pazartesi</h5>
-                    <div class="day-part">Sabah</div>
-                    <div class="day-part">Öğleden Sonra</div>
-                    <div class="day-part">Akşam Üstü</div>
-                </div>
-                <div class="day">
-                    <h5>Salı</h5>
-                    <div class="day-part">Sabah</div>
-                    <div class="day-part">Öğleden Sonra</div>
-                    <div class="day-part">Akşam Üstü</div>
-                </div>
-                <div class="day">
-                    <h5>Çarşamba</h5>
-                    <div class="day-part">Sabah</div>
-                    <div class="day-part">Öğleden Sonra</div>
-                    <div class="day-part">Akşam Üstü</div>
-                </div>
-                <div class="day">
-                    <h5>Perşembe</h5>
-                    <div class="day-part">Sabah</div>
-                    <div class="day-part">Öğleden Sonra</div>
-                    <div class="day-part">Akşam Üstü</div>
-                </div>
-                <div class="day">
-                    <h5>Cuma</h5>
-                    <div class="day-part">Sabah</div>
-                    <div class="day-part">Öğleden Sonra</div>
-                    <div class="day-part">Akşam Üstü</div>
-                </div>
-                <div class="day">
-                    <h5>Cumartesi</h5>
-                    <div class="day-part">Sabah</div>
-                    <div class="day-part">Öğleden Sonra</div>
-                    <div class="day-part">Akşam Üstü</div>
-                </div>
-                <div class="day">
-                    <h5>Pazar</h5>
-                    <div class="day-part">Sabah</div>
-                    <div class="day-part">Öğleden Sonra</div>
-                    <div class="day-part">Akşam Üstü</div>
-                </div>
-            </div>
+                <% const daysOfWeek = ["Pazartesi", "Salı", "Çarşamba", "Perşembe", "Cuma", "Cumartesi", "Pazar"]; %>
+                <% daysOfWeek.forEach(dayName => { %>
+                  <% const day = days.find(d => d.title === dayName) || {}; %>
+                  <div class="day">
+                    <h5><%= dayName %></h5>
+                    <div class="day-part">
+                      Sabah
+                      <% if(day.morning && day.morning.event) { %>
+                        <p><%= day.morning.event %></p>
+                      <% } %>
+                    </div>
+                    <div class="day-part">
+                      Öğleden Sonra
+                      <% if(day.afternoon && day.afternoon.event) { %>
+                        <p><%= day.afternoon.event %></p>
+                      <% } %>
+                    </div>
+                    <div class="day-part">
+                      Akşam Üstü
+                      <% if(day.evening && day.evening.event) { %>
+                        <p><%= day.evening.event %></p>
+                      <% } %>
+                    </div>
+                  </div>
+                <% }); %>
+              </div>
+              
+            
         </div>
     </div>
     <!-- Add Event Modal -->
@@ -131,37 +116,28 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form id="addEventForm">
-                        <div class="form-group row">
-                            <div class="form-group col-md-6">
-                                <label for="event-day">Gün</label>
-                                <select class="form-control" id="event-day" name="day" required>
-                                    <option value="pazartesi">Pazartesi</option>
-                                    <option value="salı">Salı</option>
-                                    <option value="çarşamba">Çarşamba</option>
-                                    <option value="perşembe">Perşembe</option>
-                                    <option value="cuma">Cuma</option>
-                                    <option value="cumartesi">Cumartesi</option>
-                                    <option value="pazar">Pazar</option>
-                                </select>
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label for="event-time">Zaman</label>
-                                <select class="form-control" id="event-time" name="time" required>
-                                    <option value="morning">Sabah</option>
-                                    <option value="lunch">Öğle</option>
-                                    <option value="afternoon">Öğleden Sonra</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="event-description">Açıklama</label>
-                            <textarea class="form-control" id="event-description" name="description" rows="3"></textarea>
-                        </div>
-                        <div class="text-right">
-                            <button type="submit" class="btn btn-primary">Kaydet</button>
-                        </div>
-                    </form>
+                    <form action="/week" method="POST">
+                        <select name="day" required>
+                          <option value="Pazartesi">Pazartesi</option>
+                          <option value="Salı">Salı</option>
+                          <option value="Çarşamba">Çarşamba</option>
+                          <option value="Perşembe">Perşembe</option>
+                          <option value="Cuma">Cuma</option>
+                          <option value="Cumartesi">Cumartesi</option>
+                          <option value="Pazar">Pazar</option>
+                        </select>
+                        
+                        <select name="time" required>
+                          <option value="morning">Sabah</option>
+                          <option value="afternoon">Öğleden Sonra</option>
+                          <option value="evening">Akşam Üstü</option>
+                        </select>
+                        
+                        <input type="text" name="event" placeholder="Event description" required>
+                        
+                        <button type="submit">Add Event</button>
+                      </form>
+                      
                 </div>
             </div>
         </div>

@@ -3,6 +3,7 @@ const bcrypt = require("bcrypt");
 const User = require("../models/User");
 const Category = require("../models/Category");
 const Course = require("../models/Course");
+const Day = require("../models/Day");
 
 
 
@@ -62,6 +63,8 @@ exports.getDashboardPage = async (req, res) => {
   const categories = await Category.find();
   const courses = await Course.find();
   const users = await User.find();
+  const days = await Day.find();
+  const day = await Day.findById("669d5c756403b454f08ace35");
   
   
   // Filter users by role
@@ -76,6 +79,8 @@ exports.getDashboardPage = async (req, res) => {
     users,
     students,
     teachers,
+    days,
+    day
   });
 };
 

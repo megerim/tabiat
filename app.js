@@ -10,6 +10,7 @@ const pageRouter = require("./routes/pageRoute");
 const courseRouter = require("./routes/courseRoute");
 const categoryRouter = require("./routes/categoryRoute");
 const userRouter = require("./routes/userRoute");
+const weekRouter = require("./routes/weekRoute")
 
 const app = express();
 
@@ -56,6 +57,7 @@ app.use("*", (req, res, next) => {
 app.use("/", pageRouter);
 app.use("/courses", courseRouter);
 app.use("/categories", categoryRouter);
+app.use("/week", weekRouter);
 app.use("/users", userRouter);
 
 const port = 3000;
