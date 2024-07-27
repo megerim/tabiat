@@ -1052,7 +1052,7 @@ section-title
   background-color: #aecb3b;
 }
 .sign-out {
-  background: red;
+  background: #f14d5d;
   width: 50px;
   height: 50px;
   border-radius: 50%;
@@ -1062,7 +1062,7 @@ section-title
 }
 
 .sign-out:hover {
-  background-color: #ff0000;
+  background-color: #f14d5d;
 }
 
 .mega-menu ul.mega-menu__sub-menu-box {
@@ -1512,7 +1512,7 @@ ul.breadcrumb li a {
   background: transparent;
   font-size: 25px;
   color: #fff;
-  border-bottom: 2px solid #898989;
+  border-bottom: 2px solid #507836;
   text-align: center;
   letter-spacing: 2px;
 }
@@ -8987,4 +8987,61 @@ input.main-search-input:-ms-input-placeholder {
   border-top: 1px solid #dee2e6;
   padding: 10px;
   height: 100px;
+}
+
+
+.table {
+  table-layout: fixed;
+  width: 100%;
+}
+.table th, .table td {
+  text-align: center;
+  width: 33%; /* Dört sütunun eşit genişlikte olmasını sağlar */
+}
+.table .empty {
+  background-color: #f8f9fa;
+}
+.category-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;}
+
+  .BaslikDash{
+    margin-bottom: 30px;
+  }
+
+  .btn-primary{
+    background-color: #507836;
+    border-color: #507836;
+  }
+
+  .btn-primary:hover{
+    background-color: #aecb3b;
+    border-color: #aecb3b;
+  }
+
+  .form-control{
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    border-color:  solid #507836
+  }
+
+
+  .d-flex .btn {
+    margin-bottom: 0;
+}
+
+.d-flex-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.btn-primary{
+  background-color: #507836;
+  border-color: #507836;
+  transition: all .6s;
+}
+.btn-primary:hover{
+  background-color: #aecb3b;
+  border-color: #aecb3b;
 }
