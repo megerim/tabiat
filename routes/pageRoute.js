@@ -2,12 +2,13 @@ const express = require("express");
 
 const redirectMiddleware = require("../middlewares/redirectMiddleware");
 const pageController = require("../controllers/pageController");
+const adminRedirectMiddleware = require("../middlewares/adminRedirectMiddleware");
 
 const router = express.Router();
 
 router.route("/").get(pageController.getIndexPage);
 router.route("/about").get(pageController.getAboutPage);
-router.route("/register").get(redirectMiddleware, pageController.getRegisterPage);
+router.route("/register").get(adminRedirectMiddleware, pageController.getRegisterPage);
 router.route("/login").get(redirectMiddleware, pageController.getLoginPage);
 router.route("/galeri").get(pageController.getGaleriPage);
 router.route("/contact").get(pageController.getContactPage);

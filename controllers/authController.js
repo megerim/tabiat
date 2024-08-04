@@ -10,7 +10,7 @@ const Day = require("../models/Day");
 exports.createUser = async (req, res) => {
   try {
     const user = await User.create(req.body);
-    res.status(201).redirect("/login");
+    res.status(201).redirect("/users/dashboard");
   } catch (error) {
     
     const errors = validationResult(req);
@@ -64,7 +64,6 @@ exports.getDashboardPage = async (req, res) => {
   const courses = await Course.find();
   const users = await User.find();
   const days = await Day.find();
-  const day = await Day.findById("669d5c756403b454f08ace35");
   
   
   // Filter users by role
@@ -80,7 +79,6 @@ exports.getDashboardPage = async (req, res) => {
     students,
     teachers,
     days,
-    day
   });
 };
 

@@ -42,7 +42,7 @@
                                     <div class="courses-tag-btn cat-btn">
 
                                         <% for (let i = 0; i < categories.length; i++) { %>
-                                                    <a href="/courses?categories=<%= categories[i].slug %>"><%= categories[i].title %></a>
+                                                    <a href="/courses?categories=<%= categories[i].title %>"><%= categories[i].title %></a>
 
                                         <% } %>
                                     </div>
@@ -54,7 +54,7 @@
                                     <ul class="blog-recent-post">
                                         <% for (let i = 0; i < 4; i++) { %>
                                         <li>
-                                            <a href="/courses/<%= courses[i].slug %>">
+                                            <a href="/courses/<%= courses[i].title %>">
                                             <div class="posts mb-20">
                                                 <img src="/img/blog/24.jpg" alt="" class="posts__thumb mb-15">
                                                 <p><%= courses[i].title %></p>
