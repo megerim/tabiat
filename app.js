@@ -15,7 +15,7 @@ const weekRouter = require("./routes/weekRoute")
 const app = express();
 
 mongoose
-  .connect("mongodb://localhost/tabiatdb")
+  .connect(process.env.MONGODB_URI)
   .then(() => {
     console.log("DB Connected");
   })
@@ -34,10 +34,10 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(
   session({
-    secret: "my_secret",
+    secret: "megerim",
     resave: false,
     saveUninitialized: true,
-    store: MongoStore.create({ mongoUrl: "mongodb://localhost/tabiatdb" }),
+    store: MongoStore.create({ mongoUrl: process.env.MONGODB_URI }),
   })
 );
 app.use(flash());
@@ -60,7 +60,7 @@ app.use("/categories", categoryRouter);
 app.use("/week", weekRouter);
 app.use("/users", userRouter);
 
-const port = 3000;
+const port = process.env.PORT || 5000;
 app.listen(port, () => {
   console.log(`Hazır: ${port}`);
 });
