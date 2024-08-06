@@ -88,14 +88,14 @@
                 <h5><%= dayName %></h5>
                 <div class="day-part">
                  <span class="spanStyle">Sabah</span>
-                 
+
                   <% if(day.morning && day.morning.event) { %>
                     <p><%= day.morning.event %></p>
                   <% } %>
                 </div>
                 <div class="day-part">
                  <span class="spanStyle">Öğleden Sonra</span>
-                 
+
                   <% if(day.afternoon && day.afternoon.event) { %>
                     <p><%= day.afternoon.event %></p>
                   <% } %>
@@ -133,23 +133,23 @@
                           <option value="Cumartesi">Cumartesi</option>
                           <option value="Pazar">Pazar</option>
                         </select>
-                        
+
                         <select name="time" required>
                           <option value="morning">Sabah</option>
                           <option value="afternoon">Öğleden Sonra</option>
                           <option value="evening">Akşam Üstü</option>
                         </select>
-                        
+
                         <input type="text" name="event" placeholder="Açıklama giriniz..." required>
-                        
+
                         <button type="submit" class="btn btn-outline-success">Ekle</button>
                       </form>
-                      
+
                 </div>
             </div>
         </div>
     </div>
-    
+
 
     <% if (user.role === 'admin') { %>
         <!-- Courses Section -->
@@ -236,7 +236,7 @@
                         <tr>
                             <td scope="row"><%= categories[i].title %></td>
                             <td></td>
-                            <td><a href="/categories/<%= categories[i]._id %>?_method=DELETE" onclick="return confirm('ARE YOU SURE')" class="btn btn-danger rounded-0 text-white"><span>Kaldır</span></a></td>
+                            <td><a href="/categories/<%= categories[i]._id %>?_method=DELETE" onclick="return confirm('Silme işlemini onaylıyor musunuz?')" class="btn btn-danger rounded-0 text-white"><span>Kaldır</span></a></td>
                         </tr>
                     <% } %>
                 </tbody>
