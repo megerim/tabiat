@@ -324,7 +324,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="courseModalLabel">Yeni Ders Ekle</h5>
+                    <h5 class="modal-title" id="courseModalLabel">Yeni Blog Yazısı Ekle</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -332,18 +332,18 @@
                 <div class="modal-body">
                     <form method="POST" action="/courses" id="add-course-form">
                         <div class="form-group">
-                            <label for="course-name">Ders Adı</label>
+                            <label for="course-name">Başlık</label>
                             <input type="text" class="form-control" id="title" name="title" required>
                         </div>
                         <div class="form-group">
                             <input type="hidden" class="form-control" value="<%= user.role %>" name="role" required>
                         </div>
                         <div class="form-group">
-                            <label for="course-description">Ders Açıklaması</label>
+                            <label for="course-description">Yazı</label>
                             <textarea class="form-control" id="description" name="description" rows="3" required></textarea>
                         </div>
                         <div class="form-group">
-                            <label for="course-instructor">Yaş Grubu</label>
+                            <label for="course-instructor">Kategoriler</label>
                             <select name="category" id="categoryselect" class="form-control">
                                 <% categories.forEach(category => { %>
                                     <option value="<%= category._id %>"><%= category.title %></option>
