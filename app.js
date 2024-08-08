@@ -17,7 +17,7 @@ const app = express();
 
 mongoose
   .connect(
-    process.env.MONGODB_URI,
+    "mongodb+srv://tabiatUser:MiX0m4tTo4d4jGkd@okul.8cianb9.mongodb.net/?retryWrites=true&w=majority&appName=Okul",
   )
   .then(() => {
     console.log("DB Connected");
