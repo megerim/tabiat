@@ -1,90 +1,86 @@
 <%- include('partials/head') %>
 
-
-
-    <main>
-
-        <!-- blog-details-area start -->
-        <section class="blog-details-area pt-150 pb-105 pt-md-100 pb-md-55 pt-xs-100 pb-xs-55">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-8">
-                        <div class="blog-details-box mb-45">
-                            <h2><%= course.title %>
-                            </h2>
-                            <ul class="blogs__meta mb-30">
-                                <li><span class="blog-author"><%= course.user %></span></li>
-                                <li><span><img src="/img/icon/material-date-range.svg" alt="mate-date">
-                                        <%= new Date(course.createdAt).toISOString().split('T')[0] %></span></li>
-                                <li>
-                                    <div class="social-media blog-details-social">
-                                        <a href="#"><i class="fab fa-facebook-f"></i></a>
-                                        <a href="#"><i class="fab fa-instagram"></i></a>
-                                        <a href="#"><i class="fab fa-youtube"></i></a>
-                                        <a href="#"><i class="fab fa-twitter"></i></a>
-                                    </div>
-                                </li>
-                            </ul>
-
-                            <p>
-                                <%= course.description %>
-
-                            </p>
-                        </div>
-
-
+<main>
+    <section class="blog-details-area pt-150 pb-105 pt-md-100 pb-md-55 pt-xs-100 pb-xs-55">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="blog-details-box mb-45">
+                        <h2><%= course.title %></h2>
+                        <ul class="blogs__meta mb-30">
+                            <li><span class="blog-author"><%= course.category.title %></span></li>
+                            <li><span><img src="/img/icon/material-date-range.svg" alt="mate-date">
+                                <%= new Date(course.createdAt).toISOString().split('T')[0] %></span></li>
+                        </ul>
+                        
+                        <% course.content.forEach(block => { %>
+                            <% if (block.includes("http")) { %>
+                                <img src="<%= block %>" alt="blog-image" class="img-fluid mb-4">
+                            <% } else if (block.includes("<h1>") || block.includes("<h2>") || block.includes("<h3>")) { %>
+                                <div class="mb-4"><%= block %></div>
+                            <% } else { %>
+                                <p><%= block %></p>
+                            <% } %>
+                        <% }) %>
                     </div>
-                    <div class="col-lg-4">
-                        <div class="blog-widget-area">
-                            <div class="widget mb-50">
-                                <div class="blog-categories-widget">
-                                    <h4 class="sub-title pb-20 mb-25 pt-25">Kategoriler</h4>
-                                    <div class="courses-tag-btn cat-btn">
-
-                                        <% for (let i = 0; i < categories.length; i++) { %>
-                                                    <a href="/courses?categories=<%= categories[i].title %>"><%= categories[i].title %></a>
-
-                                        <% } %>
-                                    </div>
+                    <div class="d-flex justify-content-between">
+                        <a href="/courses/<%= course.slug %>/edit" class="btn btn-outline-warning">Düzenle</a>
+                        <form method="POST" action="/courses/<%= course.slug %>?_method=DELETE" onsubmit="return confirm('Bu blog yazısını silmek istediğinize emin misiniz?');">
+                            <button type="submit" class="btn btn-outline-danger">Sil</button>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="blog-widget-area">
+                        <div class="widget mb-50">
+                            <div class="blog-categories-widget">
+                                <h4 class="sub-title pb-20 mb-25 pt-25">Kategoriler</h4>
+                                <div class="courses-tag-btn cat-btn">
+                                    <% categories.forEach(category => { %>
+                                        <a href="/courses?categories=<%= category.slug %>"><%= category.title %></a>
+                                    <% }) %>
                                 </div>
                             </div>
-                            <div class="widget mb-50">
-                                <div class="blog-categories-widget">
-                                    <h4 class="sub-title pb-20 mb-25 pt-25">Diğer Yazılarımız</h4>
-                                    <ul class="blog-recent-post">
-                                        <% for (let i = 0; i < 4; i++) { %>
+                        </div>
+                        <div class="widget mb-50">
+                            <div class="blog-categories-widget">
+                                <h4 class="sub-title pb-20 mb-25 pt-25">Diğer Yazılarımız</h4>
+                                <ul class="blog-recent-post">
+                                    <% courses.slice(0, 4).forEach(post => { %>
                                         <li>
-                                            <a href="/courses/<%= courses[i].title %>">
-                                            <div class="posts mb-20">
-                                                <img src="/img/blog/24.jpg" alt="" class="posts__thumb mb-15">
-                                                <p><%= courses[i].title %></p>
-                                                <h6><%= courses[i].description.substring(0, 35) + "..." %>
-                                                </h6>
-                                            </div>
-                                        </a>
+                                            <a href="/courses/<%= post.slug %>">
+                                                <div class="posts mb-20">
+                                                    <img src="/img/blog/24.jpg" alt="" class="posts__thumb mb-15">
+                                                    <p><%= post.title %></p>
+                                                    <% let summary = post.content.find(block => block && block.trim()); %>
+                                                    <% if (summary) { %>
+                                                        <h6><%= summary.substring(0, 35) + "..." %></h6>
+                                                    <% } else { %>
+                                                        <h6>No summary available</h6>
+                                                    <% } %>
+                                                </div>
+                                            </a>
                                         </li>
-                                        <% } %>
-                                    </ul>
-                                </div>
+                                    <% }) %>
+                                </ul>
                             </div>
-                            <div class="widget mb-50">
-                                <h4 class="sub-title pb-20 mb-25 pt-25">Social Media</h4>
-                                <div class="blog-social-widget">
-                                    <div class="social-media mb-30">
-                                        <a href="#"><i class="fab fa-facebook-f"></i></a>
-                                        <a href="#"><i class="fas fa-basketball-ball"></i></a>
-                                        <a href="#"><i class="fab fa-youtube"></i></a>
-                                        <a href="#"><i class="fab fa-pinterest-p"></i></a>
-                                    </div>
+                        </div>
+                        <div class="widget mb-50">
+                            <h4 class="sub-title pb-20 mb-25 pt-25">Social Media</h4>
+                            <div class="blog-social-widget">
+                                <div class="social-media mb-30">
+                                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                                    <a href="#"><i class="fas fa-basketball-ball"></i></a>
+                                    <a href="#"><i class="fab fa-youtube"></i></a>
+                                    <a href="#"><i class="fab fa-pinterest-p"></i></a>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </section>
-        <!-- blog-details-area end -->
+        </div>
+    </section>
+</main>
 
-    </main>
-
-    <%- include("partials/footer") %>
+<%- include("partials/footer") %>

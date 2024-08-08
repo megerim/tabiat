@@ -6,18 +6,19 @@ exports.createCourse = async (req, res) => {
   try {
     const course = await Course.create({
       title: req.body.title,
-      description: req.body.description,
+      content: req.body.content, // Handling multiple content blocks
       category: req.body.category,
       user: req.session.userID,
     });
 
-    req.flash("success", `Kurs oluşturuldu: ${course.title}`);
+    req.flash("success", `Blog yazısı oluşturuldu: ${course.title}`);
     res.status(201).redirect(`/courses/${course.slug}`);
   } catch (error) {
-    req.flash ("error", "Kurs oluşturulamadı");
-    res.status(400).redirect("/users/dashboard")
+    req.flash("error", "Blog yazısı oluşturulamadı");
+    res.status(400).redirect("/users/dashboard");
   }
 };
+
 
 exports.getAllCourses = async (req, res) => {
   try {
@@ -36,13 +37,13 @@ exports.getAllCourses = async (req, res) => {
       filter.title = { $regex: ".*" + query + ".*", $options: "i" };
     }
 
-    const courses = await Course.find(filter);
+    const courses = await Course.find(filter).populate('category');
     const categories = await Category.find();
 
     res.status(200).render("courses", {
       courses,
       categories,
-      title: "Courses",
+      title: "Blog Yazıları",
     });
   } catch (error) {
     res.status(400).json({
@@ -53,53 +54,49 @@ exports.getAllCourses = async (req, res) => {
 };
 
 
+
 exports.getCourse = async (req, res) => {
   try {
     const user = await User.findById(req.session.userID);
-    const courses = await Course.find();
-    const course = await Course.findOne({ slug: req.params.slug });
+    const courses = await Course.find().populate('category');
+    const course = await Course.findOne({ slug: req.params.slug }).populate('category');
     const categories = await Category.find();
 
     if (!course) {
-      return res.status(404).send("Ders Bulunamadı");
+      return res.status(404).send("Blog yazısı bulunamadı");
     }
     res.status(200).render("course", {
       course,
       user,
       categories,
       courses,
-      title: "Kurs Detayı",
+      title: "Blog Yazısı Detayı",
     });
-  } catch {
+  } catch (error) {
     res.status(400).json({
       success: false,
+      error: error.message,
     });
   }
 };
-exports.enrollCourse = async (req, res) => {
+
+
+exports.updateCourse = async (req, res) => {
   try {
-    const user = await User.findById(req.session.userID);
-    user.courses.push({ _id: req.body.course_id });
-    await user.save();
+    const course = await Course.findOne({ slug: req.params.slug });
+    course.title = req.body.title;
+    course.content = req.body.content; // Handling multiple content blocks
+    course.category = req.body.category;
+    await course.save();
+    req.flash("success", `${course.title} başarıyla güncellendi.`);
     res.status(200).redirect("/users/dashboard");
-  } catch {
-    res.status(400).json({
-      success: false,
-    });
+  } catch (error) {
+    req.flash("error", "Blog yazısı güncellenemedi");
+    res.status(400).redirect("/users/dashboard");
   }
 };
-exports.releaseCourse = async (req, res) => {
-  try {
-    const user = await User.findById(req.session.userID);
-    user.courses.pull({ _id: req.body.course_id });
-    await user.save();
-    res.status(200).redirect("/users/dashboard");
-  } catch {
-    res.status(400).json({
-      success: false,
-    });
-  }
-};
+
+
 exports.deleteCourse = async (req, res) => {
   try {
     const course = await Course.findOneAndDelete({ slug: req.params.slug });
@@ -113,18 +110,26 @@ exports.deleteCourse = async (req, res) => {
   }
 };
 
-exports.updateCourse = async (req, res) => {
+exports.editCourse = async (req, res) => {
   try {
-    const course = await Course.findOne({ slug: req.params.slug });
-    course.title = req.body.title;
-    course.description = req.body.description;
-    course.category = req.body.category;
-    await course.save();
-    req.flash("success", `${course.title} başarıyla güncellendi. `);
-    res.status(200).redirect("/users/dashboard");
-  } catch {
+    const user = await User.findById(req.session.userID);
+    const course = await Course.findOne({ slug: req.params.slug }).populate('category');
+    const categories = await Category.find();
+
+    if (!course) {
+      return res.status(404).send("Blog yazısı bulunamadı");
+    }
+
+    res.status(200).render("editCourse", {
+      course,
+      categories,
+      user,
+      title: "Blog Yazısını Düzenle",
+    });
+  } catch (error) {
     res.status(400).json({
       success: false,
+      error: error.message,
     });
   }
 };

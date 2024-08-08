@@ -6,12 +6,11 @@ const CourseSchema = new Schema({
   title: {
     type: String,
     unique: true,
-    required: [true, "Please provide a description"],
+    required: [true, "Please provide a title"],
   },
-  description: {
-    type: String,
-    required: [true, "Please provide a description"],
-    trim: true,
+  content: {
+    type: [String], // Array to handle multiple content blocks
+    required: [true, "Please provide content"],
   },
   createdAt: {
     type: Date,

@@ -1,372 +1,368 @@
 <%- include('partials/head') %>
 <style>
-    .calendar {
-      display: flex;
-      overflow-x: auto;
-    }
-    .day {
-      flex: 0 0 14%;
-      border: 1px solid #dee2e6;
-      text-align: center;
-      margin: 0;
-      padding: 0;
-    }
-    .day h5 {
-      margin: 0;
-      font-size: 1rem;
-      padding: 10px;
-      background-color: #f8f9fa;
-      border-bottom: 1px solid #dee2e6;
-    }
-    .day-part {
-      border-top: 1px solid #dee2e6;
-      padding: 10px;
-      height: 100px;
-    }
+  /* Existing styles */
+  .calendar {
+    display: flex;
+    overflow-x: auto;
+  }
+  .day {
+    flex: 0 0 14%;
+    border: 1px solid #dee2e6;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+  }
+  .day h5 {
+    margin: 0;
+    font-size: 1rem;
+    padding: 10px;
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #dee2e6;
+  }
+  .day-part {
+    border-top: 1px solid #dee2e6;
+    padding: 10px;
+    height: 100px;
+  }
 
-    .spanStyle{
-        font-weight: bold;
-    }
+  .spanStyle {
+    font-weight: bold;
+  }
+
+  /* New styles for announcements */
+  .duyurular {
+    margin-bottom: 20px;
+    border: 1px solid #dee2e6;
+    padding: 10px;
+    background-color: #f8f9fa;
+  }
+  .duyurular h5 {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+  }
+  .duyurular p {
+    margin: 5px 0;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  .duyurular p:hover {
+    background-color: #e9ecef;
+  }
+  .show-more-btn {
+    text-align: center;
+    margin-top: 10px;
+  }
+  .action-buttons {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+    gap: 10px;
+  }
+  .modal-body-scrollable {
+    max-height: 70vh;
+    overflow-y: auto;
+  }
 </style>
 
-
 <main>
-
-        <!-- Dashboard Title Area -->
-        <section class="dashboard-title-area pt-150 pb-120 pt-md-100 pb-md-70 pt-xs-100 pb-xs-70">
-            <div class="container">
-                <div class="row justify-content-center">
-                    <div class="col-xl-8 col-lg-9">
-                        <div class="section-title text-center mb-55" >
-                            <% if (user.role === 'teacher') { %>
-                                <h2>Öğretmen Paneli</h2>
-                            <% } else if (user.role === 'student') { %>
-                                <h2>Öğrenci Paneli</h2>
-                            <% } else if (user.role === 'admin') { %>
-                                <h2>Yönetim Paneli</h2>
-                            <% } %>
-                            <h4>Hoşgeldiniz, <%= user.name %></h4>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <div class="container">
-        <% if(flashMessages) { %>
-
-            <% if(flashMessages.success) { %>
-                <div class="alert alert-success">
-                    <%= flashMessages.success %>
-                </div>
-            <% } else if(flashMessages.error){ %>
-            <div class="alert alert-danger">
-                <%= flashMessages.error %>
-            </div>
-                <% } %>
+  <!-- Dashboard Title Area -->
+  <section class="dashboard-title-area pt-150 pb-120 pt-md-100 pb-md-70 pt-xs-100 pb-xs-70">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-xl-8 col-lg-9">
+          <div class="section-title text-center mb-55">
+            <% if (user.role === 'teacher') { %>
+              <h2>Öğretmen Paneli</h2>
+            <% } else if (user.role === 'student') { %>
+              <h2>Öğrenci Paneli</h2>
+            <% } else if (user.role === 'admin') { %>
+              <h2>Yönetim Paneli</h2>
             <% } %>
-        </div>
-        <!-- Calendar Section -->
-     <!-- Calendar Section -->
-<div class="container">
-    <div class="">
-        <div class="d-flex justify-content-between align-items-center mb-4">
-            <h2 class="mb-0">Haftalık Takvim</h2>
-            <% if (user.role === 'teacher' || user.role === 'admin') { %>
-                <!-- Add Event Button -->
-                <div>
-                    <button class="btn btn-outline-success" data-toggle="modal" data-target="#addEventModal">Ekle</button>
-                    <button class="btn btn-outline-warning" data-toggle="modal" data-target="#addEventModal">Düzenle</button>
-                </div>
-            <% } %>
-        </div>
-
-        <div class="calendar">
-            <% const daysOfWeek = ["Pazartesi", "Salı", "Çarşamba", "Perşembe", "Cuma", "Cumartesi", "Pazar"]; %>
-            <% daysOfWeek.forEach(dayName => { %>
-              <% const day = days.find(d => d.title === dayName) || {}; %>
-              <div class="day">
-                <h5><%= dayName %></h5>
-                <div class="day-part">
-                 <span class="spanStyle">Sabah</span>
-
-                  <% if(day.morning && day.morning.event) { %>
-                    <p><%= day.morning.event %></p>
-                  <% } %>
-                </div>
-                <div class="day-part">
-                 <span class="spanStyle">Öğleden Sonra</span>
-
-                  <% if(day.afternoon && day.afternoon.event) { %>
-                    <p><%= day.afternoon.event %></p>
-                  <% } %>
-                </div>
-                <div class="day-part">
-                 <span class="spanStyle"> Akşam Üstü </span>
-                  <% if(day.evening && day.evening.event) { %>
-                    <p><%= day.evening.event %></p>
-                  <% } %>
-                </div>
-              </div>
-            <% }); %>
+            <h4>Hoşgeldiniz, <%= user.name %></h4>
           </div>
+        </div>
+      </div>
     </div>
-</div>
+  </section>
 
-    <!-- Add Event Modal -->
-    <div class="modal fade" id="addEventModal" tabindex="-1" role="dialog" aria-labelledby="addEventModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="addEventModalLabel">Takvim Yönetimi</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form action="/week" method="POST">
-                        <select name="day" required>
-                          <option value="Pazartesi">Pazartesi</option>
-                          <option value="Salı">Salı</option>
-                          <option value="Çarşamba">Çarşamba</option>
-                          <option value="Perşembe">Perşembe</option>
-                          <option value="Cuma">Cuma</option>
-                          <option value="Cumartesi">Cumartesi</option>
-                          <option value="Pazar">Pazar</option>
-                        </select>
-
-                        <select name="time" required>
-                          <option value="morning">Sabah</option>
-                          <option value="afternoon">Öğleden Sonra</option>
-                          <option value="evening">Akşam Üstü</option>
-                        </select>
-
-                        <input type="text" name="event" placeholder="Açıklama giriniz..." required>
-
-                        <button type="submit" class="btn btn-outline-success">Ekle</button>
-                      </form>
-
-                </div>
-            </div>
-        </div>
+  <!-- Duyurular Section -->
+  <div class="container duyurular">
+    <h5>Duyurular</h5>
+    <% const latestDuyurular = duyurular.slice(-3).reverse(); %>
+    <% latestDuyurular.forEach(duyuru => { %>
+      <p data-toggle="modal" data-target="#duyuruModal-<%= duyuru._id %>">
+        <%= duyuru.text.length > 170 ? duyuru.text.substring(0, 170) + '...' : duyuru.text %>
+      </p>
+    <% }); %>
+    <div class="action-buttons">
+      <button class="btn btn-outline-primary" data-toggle="modal" data-target="#allDuyurularModal">Daha Fazla Göster</button>
+      <% if (user.role === 'admin') { %>
+        <button class="btn btn-outline-success" data-toggle="modal" data-target="#addDuyuruModal">Duyuru Ekle</button>
+      <% } %>
     </div>
+  </div>
 
-
-    <% if (user.role === 'admin') { %>
-        <!-- Courses Section -->
-        <div class="container">
-            <div class="d-flex justify-content-between align-items-center mb-4">
-                <h3 class="mb-0 mt-155">Blog Yazıları</h3>
-                    <!-- Add Event Button -->
-                    <div>
-                        <button class="btn btn-outline-success mt-155" data-toggle="modal" data-target="#courseModal">Yazı Ekle</button>
-                    </div>
+  <!-- Calendar Section -->
+  <div class="container">
+    <div class="">
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="mb-0">Haftalık Takvim</h2>
+        <% if (user.role === 'admin') { %>
+          <!-- Add Event Button -->
+          <div>
+            <button class="btn btn-outline-success" data-toggle="modal" data-target="#addEventModal">Ekle</button>
+            <button class="btn btn-outline-warning" data-toggle="modal" data-target="#addEventModal">Düzenle</button>
+          </div>
+        <% } %>
+      </div>
+      <div class="calendar">
+        <% const daysOfWeek = ["Pazartesi", "Salı", "Çarşamba", "Perşembe", "Cuma", "Cumartesi", "Pazar"]; %>
+        <% daysOfWeek.forEach(dayName => { %>
+          <% const day = days.find(d => d.title === dayName) || {}; %>
+          <div class="day">
+            <h5><%= dayName %></h5>
+            <div class="day-part">
+              <span class="spanStyle">Sabah</span>
+              <% if(day.morning && day.morning.event) { %>
+                <p><%= day.morning.event %></p>
+              <% } %>
             </div>
-            <% courses.forEach(course => { %>
-                <div class="card mb-3">
-                    <div class="card-body">
-                        <h5 class="card-title"><%= course.title %></h5>
-                        <p class="card-text"><%= course.description.substring(0, 100) + "..." %></p>
-                        <a href="/courses/<%= course.slug %>" class="btn btn-outline-primary mr-2">Görüntüle</a>
-                        <button class="btn btn-outline-warning mr-2" data-toggle="modal" data-target="#updateCourse<%= course.slug %>">Düzenle</button>
-                        <a href="/courses/<%= course.slug %>?_method=DELETE" class="btn btn-outline-danger" onclick="return confirm('Emin misiniz?')">Kaldır</a>
-                    </div>
-                </div>
-
-                <!-- Update Modal -->
-                <div class="modal fade" id="updateCourse<%= course.slug %>" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="editModalLabel">Dersi Düzenle</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <form method="POST" action="/courses/<%= course.slug %>?_method=PUT" id="add-course-form">
-                                    <div class="form-group">
-                                        <label for="course-name">Ders Adı</label>
-                                        <input type="text" class="form-control" id="title" name="title" value="<%= course.title %>" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="hidden" class="form-control" value="<%= user.role %>" name="role" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="course-description">Ders Açıklaması</label>
-                                        <textarea class="form-control" id="description" name="description" rows="3" required><%= course.description %></textarea>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="course-instructor">Yaş Grubu</label>
-                                        <select name="category" id="categoryselect" class="form-control">
-                                            <% categories.forEach(category => { %>
-                                                <option value="<%= category._id %>"><%= category.title %></option>
-                                            <% }); %>
-                                        </select>
-                                    </div>
-                                    <button type="submit" class="btn btn-outline-success">Kaydet</button>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            <% }); %>
-        </div>
-    <% } %>
-
-
-    <% if (user.role === 'admin') { %>
-        <div class="container">
-            <div class="d-flex justify-content-between align-items-center mb-4">
-                <h3 class="mb-0 mt-155">Kategoriler</h3>
-                    <!-- Add Event Button -->
-                    <div>
-                        <a href="#" data-toggle="modal" data-target="#addCategory" class="btn  btn-outline-success mt-155">Kategori Ekle</a>
-                    </div>
+            <div class="day-part">
+              <span class="spanStyle">Öğleden Sonra</span>
+              <% if(day.afternoon && day.afternoon.event) { %>
+                <p><%= day.afternoon.event %></p>
+              <% } %>
             </div>
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th scope="col">ID#</th>
-                        <th></th>
-                        <th scope="col"> Kategori Kaldır</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <% for (let i = 0; i < categories.length; i++) { %>
-                        <tr>
-                            <td scope="row"><%= categories[i].title %></td>
-                            <td></td>
-                            <td><a href="/categories/<%= categories[i]._id %>?_method=DELETE" onclick="return confirm('Silme işlemini onaylıyor musunuz?')" class="btn btn-danger rounded-0 text-white"><span>Kaldır</span></a></td>
-                        </tr>
-                    <% } %>
-                </tbody>
-            </table>
-        </div>
-
-        <div class="container mt-155 mb-55">
-            <div class="d-flex justify-content-between align-items-center">
-                <h3 class="BaslikDash">Öğrenci Hesapları</h3>
-                    <div>
-                        <a href="/register" class="btn  btn-outline-success">Hesap Ekle</a>
-                    </div>
+            <div class="day-part">
+              <span class="spanStyle">Akşam Üstü</span>
+              <% if(day.evening && day.evening.event) { %>
+                <p><%= day.evening.event %></p>
+              <% } %>
             </div>
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th scope="col">Öğrenci İsmi</th>
-                        <th scope="col">Email Adresi</th>
-                        <th scope="col">Hesap Kaldır</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <% for (let i = 0; i < students.length; i++) { %>
-                        <tr>
-                            <th scope="row"><%= students[i].name %></th>
-                            <td><%= students[i].email %></td>
-                            <td><a href="/users/<%= students[i]._id %>?_method=DELETE" onclick="return confirm('ARE YOU SURE')" class="btn btn-danger rounded-0 text-white"><span>Kaldır</span></a></td>
-                        </tr>
-                    <% } %>
-                </tbody>
-            </table>
-        </div>
+          </div>
+        <% }); %>
+      </div>
+    </div>
+  </div>
 
-        <div class="container mt-155 mb-55">
-            <div class="d-flex justify-content-between align-items-center">
-                <h3 class="BaslikDash">Öğretmen Hesapları</h3>
-                    <div>
-                        <a href="/register" class="btn  btn-outline-success">Hesap Ekle</a>
-                    </div>
+  <!-- Modals for Duyurular -->
+  <% duyurular.forEach(duyuru => { %>
+    <div class="modal fade" id="duyuruModal-<%= duyuru._id %>" tabindex="-1" role="dialog" aria-labelledby="duyuruModalLabel-<%= duyuru._id %>" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="duyuruModalLabel-<%= duyuru._id %>">Duyuru</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p><%= duyuru.text %></p>
+          </div>
+          <% if (user.role === 'admin') { %>
+            <div class="modal-footer">
+              <form action="/duyurular/<%= duyuru._id %>?_method=DELETE" method="POST">
+                <button type="submit" class="btn btn-danger">Sil</button>
+              </form>
             </div>
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th scope="col">Öğretmen İsmi</th>
-                        <th scope="col">Email Adresi</th>
-                        <th scope="col">Hesap Kaldır</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <% for (let i = 0; i < teachers.length; i++) { %>
-                        <tr>
-                            <th scope="row"><%= teachers[i].name %></th>
-                            <td><%= teachers[i].email %></td>
-                            <td><a href="/users/<%= teachers[i]._id %>?_method=DELETE" onclick="return confirm('ARE YOU SURE')" class="btn btn-danger rounded-0 text-white"><span>Kaldır</span></a></td>
-                        </tr>
-                    <% } %>
-                </tbody>
-            </table>
+          <% } %>
         </div>
-    <% } %>
+      </div>
+    </div>
+  <% }); %>
 
-    <div class="modal fade" id="addCategory" tabindex="-1" role="dialog" aria-labelledby="categoryModal" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="categoryModal">Yeni Kategori Ekle</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form method="POST" action="/categories" id="add-course-form">
-                        <div class="form-group">
-                            <label for="course-name">Kategori İsmi:</label>
-                            <input type="text" class="form-control" id="title" name="title" required>
-                        </div>
-                        <button type="submit" class="btn btn-outline-success">Kaydet</button>
-                    </form>
-                </div>
-            </div>
+  <!-- All Duyurular Modal -->
+  <div class="modal fade" id="allDuyurularModal" tabindex="-1" role="dialog" aria-labelledby="allDuyurularModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="allDuyurularModalLabel">Tüm Duyurular</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
         </div>
+        <div class="modal-body modal-body-scrollable">
+          <% const sortedDuyurular = duyurular.slice().reverse(); %>
+          <% sortedDuyurular.forEach(duyuru => { %>
+            <p class="open-singular-modal" data-id="<%= duyuru._id %>">
+              <%= duyuru.text.length > 50 ? duyuru.text.substring(0, 50) + '...' : duyuru.text %>
+            </p>
+          <% }); %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Add Event Modal -->
+  <div class="modal fade" id="addEventModal" tabindex="-1" role="dialog" aria-labelledby="addEventModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="addEventModalLabel">Takvim Yönetimi</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form action="/week" method="POST">
+            <select name="day" required>
+              <option value="Pazartesi">Pazartesi</option>
+              <option value="Salı">Salı</option>
+              <option value="Çarşamba">Çarşamba</option>
+              <option value="Perşembe">Perşembe</option>
+              <option value="Cuma">Cuma</option>
+              <option value="Cumartesi">Cumartesi</option>
+              <option value="Pazar">Pazar</option>
+            </select>
+            <select name="time" required>
+              <option value="morning">Sabah</option>
+              <option value="afternoon">Öğleden Sonra</option>
+              <option value="evening">Akşam Üstü</option>
+            </select>
+            <input type="text" name="event" placeholder="Açıklama giriniz..." required>
+            <button type="submit" class="btn btn-outline-success">Ekle</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Add Duyuru Modal -->
+  <div class="modal fade" id="addDuyuruModal" tabindex="-1" role="dialog" aria-labelledby="addDuyuruModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="addDuyuruModalLabel">Yeni Duyuru Ekle</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form method="POST" action="/duyurular">
+            <div class="form-group">
+              <label for="duyuru-text">Duyuru Metni:</label>
+              <textarea class="form-control" id="duyuru-text" name="text" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-outline-success">Ekle</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Kategori ve Kullanıcı Bölümleri -->
+  <% if (user.role === 'admin') { %>
+    <div class="container">
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <h3 class="mb-0 mt-155">Kategoriler</h3>
+        <!-- Add Event Button -->
+        <div>
+          <a href="#" data-toggle="modal" data-target="#addCategory" class="btn btn-outline-success mt-155">Kategori Ekle</a>
+        </div>
+      </div>
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">ID#</th>
+            <th></th>
+            <th scope="col">Kategori Kaldır</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% for (let i = 0; i < categories.length; i++) { %>
+            <tr>
+              <td scope="row"><%= categories[i].title %></td>
+              <td></td>
+              <td><a href="/categories/<%= categories[i]._id %>?_method=DELETE" onclick="return confirm('Silme işlemini onaylıyor musunuz?')" class="btn btn-danger rounded-0 text-white"><span>Kaldır</span></a></td>
+            </tr>
+          <% } %>
+        </tbody>
+      </table>
     </div>
 
-    <div class="modal fade" id="courseModal" tabindex="-1" role="dialog" aria-labelledby="courseModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="courseModalLabel">Yeni Blog Yazısı Ekle</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form method="POST" action="/courses" id="add-course-form">
-                        <div class="form-group">
-                            <label for="course-name">Başlık</label>
-                            <input type="text" class="form-control" id="title" name="title" required>
-                        </div>
-                        <div class="form-group">
-                            <input type="hidden" class="form-control" value="<%= user.role %>" name="role" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="course-description">Yazı</label>
-                            <textarea class="form-control" id="description" name="description" rows="3" required></textarea>
-                        </div>
-                        <div class="form-group">
-                            <label for="course-instructor">Kategoriler</label>
-                            <select name="category" id="categoryselect" class="form-control">
-                                <% categories.forEach(category => { %>
-                                    <option value="<%= category._id %>"><%= category.title %></option>
-                                <% }); %>
-                            </select>
-                        </div>
-                        <button type="submit" class="btn btn-outline-success mt-4">Kaydet</button>
-                    </form>
-                </div>
-            </div>
+    <div class="container mt-155 mb-55">
+      <div class="d-flex justify-content-between align-items-center">
+        <h3 class="BaslikDash">Öğrenci Hesapları</h3>
+        <div>
+          <a href="/register" class="btn btn-outline-success">Hesap Ekle</a>
         </div>
+      </div>
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Öğrenci İsmi</th>
+            <th scope="col">Email Adresi</th>
+            <th scope="col">Hesap Kaldır</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% for (let i = 0; i < students.length; i++) { %>
+            <tr>
+              <th scope="row"><%= students[i].name %></th>
+              <td><%= students[i].email %></td>
+              <td><a href="/users/<%= students[i]._id %>?_method=DELETE" onclick="return confirm('ARE YOU SURE')" class="btn btn-danger rounded-0 text-white"><span>Kaldır</span></a></td>
+            </tr>
+          <% } %>
+        </tbody>
+      </table>
     </div>
+
+    <div class="container mt-155 mb-55">
+      <div class="d-flex justify-content-between align-items-center">
+        <h3 class="BaslikDash">Öğretmen Hesapları</h3>
+        <div>
+          <a href="/register" class="btn btn-outline-success">Hesap Ekle</a>
+        </div>
+      </div>
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Öğretmen İsmi</th>
+            <th scope="col">Email Adresi</th>
+            <th scope="col">Hesap Kaldır</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% for (let i = 0; i < teachers.length; i++) { %>
+            <tr>
+              <th scope="row"><%= teachers[i].name %></th>
+              <td><%= teachers[i].email %></td>
+              <td><a href="/users/<%= teachers[i]._id %>?_method=DELETE" onclick="return confirm('ARE YOU SURE')" class="btn btn-danger rounded-0 text-white"><span>Kaldır</span></a></td>
+            </tr>
+          <% } %>
+        </tbody>
+      </table>
+    </div>
+  <% } %>
+
+  <div class="modal fade" id="addCategory" tabindex="-1" role="dialog" aria-labelledby="categoryModal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="categoryModal">Yeni Kategori Ekle</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form method="POST" action="/categories" id="add-course-form">
+            <div class="form-group">
+              <label for="course-name">Kategori İsmi:</label>
+              <input type="text" class="form-control" id="title" name="title" required>
+            </div>
+            <button type="submit" class="btn btn-outline-success">Kaydet</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
 </main>
 
-
 <footer style="background-color: green; text-align: center; color: white;">
-    <div class="p-2">
-        <a href="/">Ana sayfaya dön -></a>
-    </div>
+  <div class="p-2">
+    <a href="/">Ana sayfaya dön -></a>
+  </div>
 </footer>
-
-<!--footer-area start-->
-
 
 <!-- JS here -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -387,6 +383,16 @@
 <script src="/js/jquery.easypiechart.js"></script>
 <script src="/js/plugins.js"></script>
 <script src="/js/main.js"></script>
+
+<script>
+  $(document).ready(function() {
+    $('.open-singular-modal').click(function() {
+      var duyuruId = $(this).data('id');
+      $('#allDuyurularModal').modal('hide');
+      $('#duyuruModal-' + duyuruId).modal('show');
+    });
+  });
+</script>
 
 </body>
 </html>

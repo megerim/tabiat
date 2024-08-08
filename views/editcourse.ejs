@@ -1,0 +1,86 @@
+<%- include('partials/head') %>
+
+<div class="container pt-150 pb-150">
+    <h2>Blog Yazısını Düzenle</h2>
+    <form method="POST" action="/courses/<%= course.slug %>?_method=PUT" id="edit-blog-form">
+        <div class="form-group">
+            <label for="blog-title">Başlık</label>
+            <input type="text" class="form-control" id="blog-title" name="title" value="<%= course.title %>" required>
+        </div>
+        <div id="blog-content" class="form-group">
+            <!-- Image input -->
+            <div class="form-group">
+                <label for="content-image">Görsel URL</label>
+                <input type="url" class="form-control" id="content-image" name="content[]" value="<%= course.content.find(block => block.includes('http')) || '' %>" placeholder="Görsel URL">
+                <small class="form-text text-muted">Bir URL girin. Örneğin: http://example.com/image.jpg</small>
+            </div>
+            <!-- Other content inputs -->
+            <% course.content.filter(block => !block.includes('http')).forEach(block => { %>
+                <% if (block.includes('<h')) { %>
+                    <div class="form-group">
+                        <label for="content-title">Başlık</label>
+                        <input type="text" class="form-control" name="content[]" value="<%= block %>" placeholder="Başlık">
+                    </div>
+                <% } else { %>
+                    <div class="form-group">
+                        <label for="content-paragraph">Paragraf</label>
+                        <textarea class="form-control" name="content[]" rows="3" placeholder="Paragraf"><%= block %></textarea>
+                    </div>
+                <% } %>
+            <% }) %>
+        </div>
+        <div class="form-group">
+            <label for="blog-category">Kategoriler</label>
+            <select name="category" id="blog-category" class="form-control">
+                <% categories.forEach(category => { %>
+                    <option value="<%= category._id %>" <%= course.category._id.toString() === category._id.toString() ? 'selected' : '' %>><%= category.title %></option>
+                <% }); %>
+            </select>
+        </div>
+        <input type="hidden" name="role" value="<%= user.role %>">
+        <button type="submit" class="btn btn-outline-success mt-4">Kaydet</button>
+    </form>
+    <div class="mt-4">
+        <button class="btn btn-outline-secondary" onclick="addContentBlock('title')">Başlık Ekle</button>
+        <button class="btn btn-outline-secondary" onclick="addContentBlock('paragraph')">Paragraf Ekle</button>
+    </div>
+</div>
+
+<script>
+    function addContentBlock(type) {
+        const contentDiv = document.getElementById('blog-content');
+        let html = '';
+        switch (type) {
+            case 'title':
+                html = `
+                    <div class="form-group">
+                        <label for="content-title">Başlık</label>
+                        <input type="text" class="form-control" name="content[]" placeholder="Başlık">
+                    </div>
+                `;
+                break;
+            case 'paragraph':
+                html = `
+                    <div class="form-group">
+                        <label for="content-paragraph">Paragraf</label>
+                        <textarea class="form-control" name="content[]" rows="3" placeholder="Paragraf"></textarea>
+                    </div>
+                `;
+                break;
+        }
+        contentDiv.insertAdjacentHTML('beforeend', html);
+    }
+
+    document.getElementById('edit-blog-form').addEventListener('submit', function(event) {
+        const imageInput = document.getElementById('content-image');
+        if (imageInput.value.trim() !== '') {
+            const urlPattern = /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})(\/[\w .-]*)*\/?$/;
+            if (!urlPattern.test(imageInput.value.trim())) {
+                event.preventDefault();
+                alert('Lütfen geçerli bir URL girin.');
+            }
+        }
+    });
+</script>
+
+<%- include('partials/footer') %>

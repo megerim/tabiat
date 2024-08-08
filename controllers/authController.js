@@ -4,6 +4,7 @@ const User = require("../models/User");
 const Category = require("../models/Category");
 const Course = require("../models/Course");
 const Day = require("../models/Day");
+const Duyuru = require("../models/Duyuru");
 
 
 
@@ -64,8 +65,8 @@ exports.getDashboardPage = async (req, res) => {
   const courses = await Course.find();
   const users = await User.find();
   const days = await Day.find();
-  
-  
+  const duyurular = await Duyuru.find();  // Duyurular koleksiyonundan verileri çek
+
   // Filter users by role
   const students = users.filter(u => u.role === "student");
   const teachers = users.filter(u => u.role === "teacher");
@@ -79,8 +80,10 @@ exports.getDashboardPage = async (req, res) => {
     students,
     teachers,
     days,
+    duyurular,  // Duyurular verisini view'e geçir
   });
 };
+
 
 
 exports.deleteUser = async (req, res) => {

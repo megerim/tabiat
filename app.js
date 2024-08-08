@@ -11,12 +11,13 @@ const courseRouter = require("./routes/courseRoute");
 const categoryRouter = require("./routes/categoryRoute");
 const userRouter = require("./routes/userRoute");
 const weekRouter = require("./routes/weekRoute");
+const duyuruRouter = require("./routes/duyuruRoute");
 
 const app = express();
 
 mongoose
   .connect(
-    "mongodb+srv://tabiatUser:MiX0m4tTo4d4jGkd@okul.8cianb9.mongodb.net/?retryWrites=true&w=majority&appName=Okul",
+    process.env.MONGODB_URI,
   )
   .then(() => {
     console.log("DB Connected");
@@ -66,6 +67,7 @@ app.use("/courses", courseRouter);
 app.use("/categories", categoryRouter);
 app.use("/week", weekRouter);
 app.use("/users", userRouter);
+app.use("/duyurular", duyuruRouter)
 
 const port = process.env.PORT || 5000;
 app.listen(port, () => {

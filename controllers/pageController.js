@@ -1,4 +1,6 @@
 const nodemailer = require("nodemailer");
+const User = require("../models/User");
+const Category = require("../models/Category");
 
 exports.getIndexPage = (req, res) => {
   res.status(200).render("index", {
@@ -29,6 +31,16 @@ exports.getLoginPage = (req, res) => {
 exports.getRegisterPage = (req, res) => {
   res.status(200).render("register", {
     title: "Kayıt",
+  });
+};
+exports.getNewBlogPage = async (req, res) => {
+
+  const user = await User.findById(req.session.userID);
+  const categories = await Category.find();
+  res.status(200).render("newblog", {
+    title: "Blog",
+    user,
+    categories,
   });
 };
 
