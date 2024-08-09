@@ -3,7 +3,6 @@ const mongoose = require("mongoose");
 const session = require("express-session");
 const MongoStore = require("connect-mongo");
 const flash = require("connect-flash");
-require("dotenv").config();
 const methodOverride = require("method-override");
 const pageRouter = require("./routes/pageRoute");
 const courseRouter = require("./routes/courseRoute");
@@ -16,7 +15,7 @@ const app = express();
 
 mongoose
   .connect(
-    "mongodb+srv://tabiatdbuser:g19IlLVTAZBZKd3e@okul.8cianb9.mongodb.net/?retryWrites=true&w=majority&appName=Okul",
+    process.env.DB_STRING,
   )
   .then(() => {
     console.log("DB Connected");
@@ -41,7 +40,7 @@ app.use(
     saveUninitialized: true,
     store: MongoStore.create({
       mongoUrl:
-      "mongodb+srv://tabiatdbuser:g19IlLVTAZBZKd3e@okul.8cianb9.mongodb.net/?retryWrites=true&w=majority&appName=Okul",
+      process.env.DB_STRING,
     }),
   }),
 );
