@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const session = require("express-session");
 const MongoStore = require("connect-mongo");
 const flash = require("connect-flash");
+require("dotenv").config();
 const methodOverride = require("method-override");
 const pageRouter = require("./routes/pageRoute");
 const courseRouter = require("./routes/courseRoute");
