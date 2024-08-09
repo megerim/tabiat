@@ -8,7 +8,13 @@
 	$(window).on('load', function () {
 		$('#preloader').delay(350).fadeOut('slow');
 		$('body').delay(350).css({ 'overflow': 'visible' });
+		setTimeout(function() {
+			$('#preloader').fadeOut('slow', function() {
+				$('body').css({ 'overflow': 'visible' });
+			});
+		}, 2000);
 	});
+	
 
 
 
