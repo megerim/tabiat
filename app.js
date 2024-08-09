@@ -15,7 +15,7 @@ const app = express();
 
 mongoose
   .connect(
-    process.env.DB_STRING,
+    "mongodb+srv://tabiatdbuser:g19IlLVTAZBZKd3e@okul.8cianb9.mongodb.net/?retryWrites=true&w=majority&appName=Okul",
   )
   .then(() => {
     console.log("DB Connected");
@@ -40,7 +40,7 @@ app.use(
     saveUninitialized: true,
     store: MongoStore.create({
       mongoUrl:
-      process.env.DB_STRING,
+      "mongodb+srv://tabiatdbuser:g19IlLVTAZBZKd3e@okul.8cianb9.mongodb.net/?retryWrites=true&w=majority&appName=Okul",
     }),
   }),
 );
