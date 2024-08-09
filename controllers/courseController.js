@@ -89,7 +89,8 @@ exports.updateCourse = async (req, res) => {
   try {
     const course = await Course.findOne({ slug: req.params.slug });
     course.title = req.body.title;
-    course.content = req.body.content; // Handling multiple content blocks
+    course.content = req.body.content;
+    course.image = req.body.image;
     course.category = req.body.category;
     await course.save();
     req.flash("success", `${course.title} başarıyla güncellendi.`);
