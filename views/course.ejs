@@ -19,12 +19,17 @@
                             <%- course.content %> <!-- Render HTML content -->
                         </div>
                     </div>
+
+                    <% if (user.role === 'admin') { %>
+
+
                     <div class="d-flex justify-content-between">
                         <a href="/courses/<%= course.slug %>/edit" class="btn btn-outline-warning">Düzenle</a>
                         <form method="POST" action="/courses/<%= course.slug %>?_method=DELETE" onsubmit="return confirm('Bu blog yazısını silmek istediğinize emin misiniz?');">
                             <button type="submit" class="btn btn-outline-danger">Sil</button>
                         </form>
                     </div>
+                    <% } %>
                 </div>
                 <div class="col-lg-4">
                     <div class="blog-widget-area">
