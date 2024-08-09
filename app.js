@@ -4,6 +4,8 @@ const session = require("express-session");
 const MongoStore = require("connect-mongo");
 const flash = require("connect-flash");
 const methodOverride = require("method-override");
+require("dotenv").config();
+
 const pageRouter = require("./routes/pageRoute");
 const courseRouter = require("./routes/courseRoute");
 const categoryRouter = require("./routes/categoryRoute");
