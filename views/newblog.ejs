@@ -41,7 +41,8 @@
                 html = `
                     <div class="form-group">
                         <label for="content-title">Başlık</label>
-                        <h3 class="content-title"><input type="text" class="form-control" name="content[]" placeholder="Başlık"></h3>
+                        <input type="hidden" name="contentType[]" value="title">
+                        <input type="text" class="form-control" name="content[]" placeholder="Başlık">
                     </div>
                 `;
                 break;
@@ -49,25 +50,26 @@
                 html = `
                     <div class="form-group">
                         <label for="content-paragraph">Paragraf</label>
+                        <input type="hidden" name="contentType[]" value="paragraph">
                         <textarea class="form-control" name="content[]" rows="3" placeholder="Paragraf"></textarea>
+                    </div>
+                `;
+                break;
+            case 'image':
+                html = `
+                    <div class="form-group">
+                        <label for="content-image">Görsel URL</label>
+                        <input type="hidden" name="contentType[]" value="image">
+                        <input type="url" class="form-control" name="content[]" placeholder="Görsel URL">
+                        <small class="form-text text-muted">Bir URL girin. Örneğin: http://example.com/image.jpg</small>
                     </div>
                 `;
                 break;
         }
         contentDiv.insertAdjacentHTML('beforeend', html);
     }
-
-    document.getElementById('add-blog-form').addEventListener('submit', function(event) {
-        const imageInput = document.getElementById('content-image');
-        if (imageInput.value.trim() !== '') {
-            const urlPattern = /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})(\/[\w .-]*)*\/?$/;
-            if (!urlPattern.test(imageInput.value.trim())) {
-                event.preventDefault();
-                alert('Lütfen geçerli bir URL girin.');
-            }
-        }
-    });
 </script>
+
 
 <%- include('partials/footer') %>
 
