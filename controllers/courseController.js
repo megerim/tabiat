@@ -125,7 +125,7 @@ exports.editCourse = async (req, res) => {
       return res.status(404).send("Blog yazısı bulunamadı");
     }
 
-    res.status(200).render("editCourse", {
+    res.status(200).render("editcourse", {
       course,
       categories,
       user,
