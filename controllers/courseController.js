@@ -39,11 +39,13 @@ exports.getAllCourses = async (req, res) => {
 
     const courses = await Course.find(filter).populate('category');
     const categories = await Category.find();
+    const user = await User.findById(req.session.userID);
 
     res.status(200).render("courses", {
+      user,
       courses,
       categories,
-      title: "Blog Yazıları",
+      title: "Blog",
     });
   } catch (error) {
     res.status(400).json({
@@ -70,7 +72,7 @@ exports.getCourse = async (req, res) => {
       user,
       categories,
       courses,
-      title: "Blog Yazısı Detayı",
+      title: "Blog",
     });
   } catch (error) {
     res.status(400).json({

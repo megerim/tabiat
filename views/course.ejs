@@ -50,14 +50,14 @@
                                         <li>
                                             <a href="/courses/<%= post.slug %>">
                                                 <div class="posts mb-20">
-                                                    <img src="/img/blog/24.jpg" alt="" class="posts__thumb mb-15">
+                                                    <% let imageUrl = post.content.find(block => block.includes('http')) %>
+                                                    <% if (imageUrl) { %>
+                                                        <img src="<%= imageUrl %>" alt="<%= post.title %>" class="img-fluid posts__thumb mb-15">
+                                                    <% } else { %>
+                                                        <img src="/img/blog/02.jpg" alt="<%= post.title %>" class="posts__thumb mb-15">
+                                                    <% } %>
                                                     <p><%= post.title %></p>
                                                     <% let summary = post.content.find(block => block && block.trim()); %>
-                                                    <% if (summary) { %>
-                                                        <h6><%= summary.substring(0, 35) + "..." %></h6>
-                                                    <% } else { %>
-                                                        <h6>No summary available</h6>
-                                                    <% } %>
                                                 </div>
                                             </a>
                                         </li>
@@ -65,6 +65,7 @@
                                 </ul>
                             </div>
                         </div>
+                        
                         <div class="widget mb-50">
                             <h4 class="sub-title pb-20 mb-25 pt-25">Social Media</h4>
                             <div class="blog-social-widget">
