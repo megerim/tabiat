@@ -85,6 +85,21 @@
     </div>
   </section>
 
+  <div class="container">
+    <% if(flashMessages) { %>
+
+      <% if(flashMessages.success) { %>
+          <div class="alert alert-success">
+              <%= flashMessages.success %>
+          </div>
+      <% } else if(flashMessages.error){ %>
+      <div class="alert alert-danger">
+          <%= flashMessages.error %>
+      </div>
+          <% } %>
+      <% } %>
+  </div>
+
   <!-- Duyurular Section -->
   <div class="container duyurular">
     <h5>Duyurular</h5>
