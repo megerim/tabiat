@@ -9,8 +9,12 @@ const CourseSchema = new Schema({
     required: [true, "Please provide a title"],
   },
   content: {
-    type: [String], // Array to handle multiple content blocks
+    type: String, // Now content is just a single HTML string
     required: [true, "Please provide content"],
+  },
+  image: {
+    type: String, // URL for the image
+    required: [true, "Please provide an image URL"],
   },
   createdAt: {
     type: Date,
@@ -29,6 +33,8 @@ const CourseSchema = new Schema({
     ref: "User",
   },
 });
+
+
 
 CourseSchema.pre("validate", function (next) {
   this.slug = slugify(this.title, {

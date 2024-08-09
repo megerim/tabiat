@@ -1,5 +1,17 @@
 <%- include('partials/head') %>
 
+<style>
+    .limited-height-img {
+        max-height: 250px; /* Set the maximum height for images */
+        width: 100%;
+        object-fit: cover; /* Ensure the image covers the container without distortion */
+    }
+    .course-icon {
+        width: 50px;
+        height: 50px;
+    }
+</style>
+
 <main>
     <!-- Courses Section -->
     <section class="courses-area pt-150 pb-120 pt-md-100 pb-md-70 pt-xs-100 pb-xs-70">
@@ -18,11 +30,11 @@
             </div>
 
             <% if (userIN && user.role === 'admin') { %>
+                <div class="pt-25">
+                    <a class="btn btn-outline-success" href="/newblog">Yazı Ekle +</a>
+                </div>
+            <% } %>
 
-            <div class="pt-25">
-                <a class="btn btn-outline-success" href="/newblog">Yazı Ekle +</a>
-            </div>
-<% } %>
             <div class="row justify-content-center">
                 <div class="col-xl-8 col-lg-9">
                     <div class="section-title text-center mb-55">
@@ -58,21 +70,18 @@
                     <div class="col-lg-4 col-md-6">
                         <div class="z-blogs mb-30">
                             <div class="z-blogs__thumb mb-30">
-                                <% let imageUrl = courses[i].content.find(block => block.includes('http')) %>
-                                <% if (imageUrl) { %>
-                                    <a href="/courses/<%= courses[i].slug %>"><img src="<%= imageUrl %>" alt="blog-img" class="limited-height-img"></a>
-                                <% } else { %>
-                                    <a href="/courses/<%= courses[i].slug %>"><img src="/img/default-image.jpg" alt="blog-img" class="limited-height-img"></a>
-                                <% } %>
+                                <a href="/courses/<%= courses[i].slug %>">
+                                    <img src="<%= courses[i].image %>" alt="blog-img" class="limited-height-img">
+                                </a>
                             </div>
                             <div class="z-blogs__content">
                                 <h5 class="mb-25"><%= courses[i].category.title %></h5> <!-- Display category title -->
                                 <h4 class="sub-title mb-15"><a href="/courses/<%= courses[i].slug %>"><%= courses[i].title %></a></h4>
-                                <% let summary = courses[i].content.find(block => !block.includes('http') && block.trim()); %>
-                                <% if (summary) { %>
-                                    <p><%= summary.substring(0, 100) + "..." %></p>
+                                <% if (courses[i].content) { %>
+                                    <% let summary = courses[i].content.replace(/<[^>]+>/g, '').substring(0, 100); %>
+                                    <p><%= summary %>...</p>
                                 <% } else { %>
-                                    <p>No summary available</p>
+                                    <p>No content available</p>
                                 <% } %>
                             </div>
                         </div>
@@ -85,14 +94,4 @@
 
 <%- include("partials/footer") %>
 
-<style>
-    .limited-height-img {
-        max-height: 250px; /* Set the maximum height for images */
-        width: 100%;
-        object-fit: cover; /* Ensure the image covers the container without distortion */
-    }
-    .course-icon {
-        width: 50px;
-        height: 50px;
-    }
-</style>
+

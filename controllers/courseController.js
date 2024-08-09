@@ -6,7 +6,8 @@ exports.createCourse = async (req, res) => {
   try {
     const course = await Course.create({
       title: req.body.title,
-      content: req.body.content, // Handling multiple content blocks
+      content: req.body.content,
+      image: req.body.image, 
       category: req.body.category,
       user: req.session.userID,
     });
@@ -18,6 +19,7 @@ exports.createCourse = async (req, res) => {
     res.status(400).redirect("/users/dashboard");
   }
 };
+
 
 
 exports.getAllCourses = async (req, res) => {
