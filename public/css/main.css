@@ -9056,3 +9056,9 @@ input.main-search-input:-ms-input-placeholder {
   background-color: #aecb3b;
   border-color: #aecb3b;
 }
+
+.indexReadLink{
+  color: #507836;
+  font-weight: 600;
+  border-bottom: #aecb3b 2px solid;
+}

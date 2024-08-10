@@ -22,7 +22,7 @@
   .day-part {
     border-top: 1px solid #dee2e6;
     padding: 10px;
-    height: 100px;
+    height: 150px;
   }
 
   .spanStyle {
@@ -120,7 +120,7 @@
   <!-- Calendar Section -->
   <div class="container">
     <div class="">
-      <div class="d-flex justify-content-between align-items-center mb-4">
+      <div class="d-flex justify-content-between align-items-center pb-50 pt-50">
         <h2 class="mb-0">Haftalık Takvim</h2>
         <% if (user.role === 'admin') { %>
           <!-- Add Event Button -->
@@ -143,7 +143,7 @@
               <% } %>
             </div>
             <div class="day-part">
-              <span class="spanStyle">Öğleden Sonra</span>
+              <span class="spanStyle">Öğlen Yemeği</span>
               <% if(day.afternoon && day.afternoon.event) { %>
                 <p><%= day.afternoon.event %></p>
               <% } %>
@@ -383,6 +383,8 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="/js/metisMenu.min.js"></script>
+
 
 <script src="/js/main.js"></script>
 

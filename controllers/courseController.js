@@ -1,6 +1,8 @@
 const Course = require("../models/Course");
 const Category = require("../models/Category");
 const User = require("../models/User");
+const _ = require('lodash');
+
 
 exports.createCourse = async (req, res) => {
   try {
@@ -22,6 +24,7 @@ exports.createCourse = async (req, res) => {
 
 
 
+
 exports.getAllCourses = async (req, res) => {
   try {
     const categorySlug = req.query.categories;
@@ -39,9 +42,15 @@ exports.getAllCourses = async (req, res) => {
       filter.title = { $regex: ".*" + query + ".*", $options: "i" };
     }
 
-    const courses = await Course.find(filter).populate('category');
+    let courses = await Course.find(filter).populate('category');
     const categories = await Category.find();
     const user = await User.findById(req.session.userID);
+
+    // Decode HTML entities for each course's content
+    courses = courses.map(course => {
+      course.content = _.unescape(course.content);
+      return course;
+    });
 
     res.status(200).render("courses", {
       user,

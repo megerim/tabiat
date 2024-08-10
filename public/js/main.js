@@ -439,6 +439,21 @@
 	}
 	wowAnimation();
 
+	//progress-bar
+	$('.chart1').easyPieChart({
+		barColor: '#FF723A',
+		trackColor: '#d0d2d5',
+		lineWidth: 15,
+		lineCap: 'circle',
+		scaleColor: 0,
+		scaleLength: 0,
+		size: 120,
+		animate: {
+			duration: 2000,
+			enabled: true,
+		},
+	});
+
 
 	//nice-select
 	$(document).ready(function () {
