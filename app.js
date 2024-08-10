@@ -4,6 +4,7 @@ const session = require("express-session");
 const MongoStore = require("connect-mongo");
 const flash = require("connect-flash");
 const methodOverride = require("method-override");
+const path = require("path"); // Ensure path module is included
 require("dotenv").config();
 
 const pageRouter = require("./routes/pageRoute");
@@ -16,9 +17,7 @@ const duyuruRouter = require("./routes/duyuruRoute");
 const app = express();
 
 mongoose
-  .connect(
-    process.env.DB_STRING,
-  )
+  .connect(process.env.DB_STRING)
   .then(() => {
     console.log("DB Connected");
   })
@@ -28,12 +27,22 @@ mongoose
 
 app.set("view engine", "ejs");
 
-app.get('/robots.txt', (req, res) => {
-  res.sendFile(path.join(__dirname, 'robots.txt'));
+app.get('/robots.txt', (req, res, next) => {
+  res.sendFile(path.join(__dirname, 'robots.txt'), err => {
+    if (err) {
+      console.error('Error sending robots.txt:', err);
+      next(err);
+    }
+  });
 });
 
-app.get('/sitemap.xml', (req, res) => {
-  res.sendFile(path.join(__dirname, 'sitemap.xml'));
+app.get('/sitemap.xml', (req, res, next) => {
+  res.sendFile(path.join(__dirname, 'sitemap.xml'), err => {
+    if (err) {
+      console.error('Error sending sitemap.xml:', err);
+      next(err);
+    }
+  });
 });
 
 //Global
@@ -49,8 +58,7 @@ app.use(
     resave: false,
     saveUninitialized: true,
     store: MongoStore.create({
-      mongoUrl:
-      process.env.DB_STRING,
+      mongoUrl: process.env.DB_STRING,
     }),
   }),
 );
@@ -75,7 +83,7 @@ app.use("/courses", courseRouter);
 app.use("/categories", categoryRouter);
 app.use("/week", weekRouter);
 app.use("/users", userRouter);
-app.use("/duyurular", duyuruRouter)
+app.use("/duyurular", duyuruRouter);
 
 const port = process.env.PORT || 5000;
 app.listen(port, () => {
