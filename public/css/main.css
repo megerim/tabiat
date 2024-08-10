@@ -3528,6 +3528,7 @@ input.main-search-input:-ms-input-placeholder {
     width: 80%;
     -webkit-animation: unset;
     animation: unset;
+    display: none;
   }
 }
 
@@ -3728,8 +3729,8 @@ input.main-search-input:-ms-input-placeholder {
 
 @media (max-width: 767px) {
   .slider-img-box-two .chose-img-wrapper .chose_05 {
-    width: 70%;
-    margin-left: 45px;
+    width: 100%;
+    margin-left: -5px;
   }
 }
 
