@@ -10,6 +10,8 @@
     <meta name="keywords"
         content="Başakşehir anaokulu, Ayşe Öğretmen Tabiat Anaokulu, çocuk eğitimi, tabiat eğitimi, çocuk gelişimi, doğa ile eğitim,ayşe,öğretmen,tabiat,anaokulu,regilio,Emilia, regilio emilia">
     <meta name="author" content="Ayşe Öğretmen Tabiat Anaokulu">
+    <link rel="canonical" href="https://www.ayseogretmentabiatanaokulu.com/">
+
     <title><%= title %> | Ayşe Öğretmen Tabiat Anaokulu</title>
 
     <link rel="manifest" href="site.webmanifest">
@@ -29,6 +31,33 @@
     <link rel="stylesheet" href="/css/slick.css">
     <link rel="stylesheet" href="/css/spacing.css">
     <link rel="stylesheet" href="/css/main.css">
+
+    <script type="application/ld+json">
+        {
+          "@context": "https://schema.org",
+          "@type": "Preschool",
+          "name": "Ayşe Öğretmen Tabiat Anaokulu",
+          "url": "https://www.ayseogretmentabiatanaokulu.com/",
+          "logo": "https://www.ayseogretmentabiatanaokulu.com//img/logo/logo2.png",
+          "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "Başak, Selvi Sk. Kapı no: 37, Blok: V2 39 ",
+            "addressLocality": "İstanbul",
+            "addressRegion": "İstanbul",
+            "postalCode": "34000",
+            "addressCountry": "Türkiye"
+          },
+          "contactPoint": {
+            "@type": "ContactPoint",
+            "telephone": "+905532491104",
+            "contactType": "Telefon"
+          },
+          "sameAs": [
+            "https://www.instagram.com/ayseogretmenanaokulu"
+          ]
+        }
+        </script>
+        
 </head>
 
 <body>
@@ -43,7 +72,7 @@
             <div class="container-fluid">
                 <div class="row align-items-center">
                     <div class="col-xl-2 col-lg-2 col-5">
-                        <div class="logo"><a href="/"><img src="/img/logo/logo2.png" alt=""></a></div>
+                        <div class="logo"><a href="/"><img src="/img/logo/logo2.png" alt="Logo"></a></div>
 
                     </div>
                     <div class="col-xl-7 col-lg-8 d-none d-lg-block">
@@ -54,12 +83,12 @@
                             <div class="right-btn mr-25 mr-xs-15">
                                 <ul class="d-flex align-items-center">
                                     <li><a href="/contact" class="theme_btn free_btn"> <img class="phone-svg"
-                                                src="/img/icon/phone-alt.svg" alt=""> İletişim</a></li>
+                                                src="/img/icon/phone-alt.svg" alt="contact icon"> İletişim</a></li>
                                    <% if (!userIN) { %>
-                                                <li><a class="sign-in ml-20" href="/login"><img src="/img/icon/user.svg" alt=""></a>
+                                                <li><a class="sign-in ml-20" href="/login"><img src="/img/icon/user.svg" alt="user icon"></a>
                                     </li>
                                     <% } else { %>
-                                        <li><a href="/users/logout" class="sign-out ml-20"><img src="/img/icon/logout.svg" alt=""></a></li>
+                                        <li><a href="/users/logout" class="sign-out ml-20"><img src="/img/icon/logout.svg" alt="user icon"></a></li>
                                     <% } %>
                                 </ul>
                             </div>
