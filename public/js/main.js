@@ -1,23 +1,6 @@
 (function ($) {
 	"use strict";
 
-	/*------------------------------------
-			Preloader
-		--------------------------------------*/
-
-	$(window).on('load', function () {
-		$('#preloader').delay(350).fadeOut('slow');
-		$('body').delay(350).css({ 'overflow': 'visible' });
-		setTimeout(function() {
-			$('#preloader').fadeOut('slow', function() {
-				$('body').css({ 'overflow': 'visible' });
-			});
-		}, 2000);
-	});
-	
-
-
-
 	//tooggle - btn
 	jQuery(function (dnxte_contenttoggle) {
 		dnxte_contenttoggle(".dnxte-toggle-btn .dnxte-input").each(function () {
