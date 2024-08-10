@@ -42,7 +42,10 @@ exports.getAllCourses = async (req, res) => {
       filter.title = { $regex: ".*" + query + ".*", $options: "i" };
     }
 
-    let courses = await Course.find(filter).populate('category');
+    let courses = await Course.find(filter)
+                              .populate('category')
+                              .sort({ createdAt: -1 });  // Sort by createdAt in descending order
+
     const categories = await Category.find();
     const user = await User.findById(req.session.userID);
 
@@ -65,6 +68,7 @@ exports.getAllCourses = async (req, res) => {
     });
   }
 };
+
 
 
 
