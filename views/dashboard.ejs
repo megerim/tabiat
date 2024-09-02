@@ -1,33 +1,115 @@
 <%- include('partials/head') %>
 <style>
-  /* Existing styles */
+/* Base Styles */
+.calendar {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr); /* Default for large screens */
+  gap: 3px;
+  overflow-x: auto;
+  padding-bottom: 10px;
+}
+
+.day {
+  border: 1px solid #dee2e6;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+}
+
+.day h5 {
+  margin: 0;
+  font-size: 1rem;
+  padding: 10px;
+  background-color: #d7d9db;
+  border-bottom: 1px solid #d7d9db;
+}
+
+.day-part {
+  border-top: 1px solid #dee2e6;
+  padding: 10px;
+  min-height: 200px;
+  height: auto;
+}
+
+.spanStyle {
+  font-weight: bold;
+  font-size: small;
+  color: rgba(21, 21, 21, 0.875);
+}
+
+.innerStyle {
+  font-size: large;
+}
+
+/* Tablet Devices (min-width: 768px) */
+@media (max-width: 1024px) {
   .calendar {
-    display: flex;
-    overflow-x: auto;
+    grid-template-columns: repeat(3, 1fr); /* 3 columns on tablets */
   }
-  .day {
-    flex: 0 0 14%;
-    border: 1px solid #dee2e6;
-    text-align: center;
-    margin: 0;
-    padding: 0;
-  }
+
   .day h5 {
-    margin: 0;
-    font-size: 1rem;
-    padding: 10px;
-    background-color: #f8f9fa;
-    border-bottom: 1px solid #dee2e6;
-  }
-  .day-part {
-    border-top: 1px solid #dee2e6;
-    padding: 10px;
-    height: 150px;
+    font-size: 0.9rem;
   }
 
   .spanStyle {
-    font-weight: bold;
+    font-size: small;
   }
+
+  .day-part {
+    min-height: 150px;
+    height: auto;
+  }
+  .innerStyle{
+    font-size: small;
+  }
+}
+
+/* Mobile Devices (max-width: 768px) */
+@media (max-width: 768px) {
+  .calendar {
+    grid-template-columns: repeat(2, 1fr); /* 2 columns on mobile */
+  }
+
+  .day h5 {
+    font-size: 0.8rem;
+  }
+
+  .spanStyle {
+    font-size: x-small;
+  }
+
+  .day-part {
+    min-height: 120px;
+  height: auto;
+  }
+  .innerStyle {
+  font-size: small;
+  }
+}
+
+/* Small Mobile Devices (max-width: 480px) */
+@media (max-width: 480px) {
+  .calendar {
+    grid-template-columns: 1fr; /* 1 column on small mobile devices */
+  }
+
+  .day h5 {
+    font-size: 0.7rem;
+  }
+
+  .spanStyle {
+    font-size: xx-small;
+  }
+
+  .day-part {
+    min-height: 100px;
+  height: auto;
+  }
+
+  .innerStyle {
+  font-size: small;
+}
+}
 
   /* New styles for announcements */
   .duyurular {
@@ -117,48 +199,53 @@
     </div>
   </div>
 
+ 
   <!-- Calendar Section -->
-  <div class="container">
-    <div class="">
-      <div class="d-flex justify-content-between align-items-center pb-50 pt-50">
-        <h2 class="mb-0">Haftalık Takvim</h2>
-        <% if (user.role === 'admin') { %>
-          <!-- Add Event Button -->
-          <div>
-            <button class="btn btn-outline-success" data-toggle="modal" data-target="#addEventModal">Ekle</button>
-            <button class="btn btn-outline-warning" data-toggle="modal" data-target="#addEventModal">Düzenle</button>
+<div class="container">
+  <div class="">
+    <div class="d-flex justify-content-between align-items-center pb-50 pt-50">
+      <h2 class="mb-0 display-6 display-md-5 display-lg-4">Haftalık Yemek Takvimi</h2>
+      <% if (user.role === 'admin') { %>
+        <!-- Add Event Button -->
+        <div>
+          <button class="btn btn-outline-success" data-toggle="modal" data-target="#addEventModal">Ekle</button>
+          <button class="btn btn-outline-warning" data-toggle="modal" data-target="#addEventModal">Düzenle</button>
+        </div>
+      <% } %>
+    </div>
+    <div class="calendar">
+      <% const daysOfWeek = ["Pazartesi", "Salı", "Çarşamba", "Perşembe", "Cuma"]; %>
+      <% daysOfWeek.forEach(dayName => { %>
+        <% const day = days.find(d => d.title === dayName) || {}; %>
+        <div class="day">
+          <div class="dayBG">
+          <h5><%= dayName %></h5>
+        </div>
+          <div class="day-part">
+            <span class="spanStyle">Sabah Kahvaltısı</span>
+            <% if(day.morning && day.morning.event) { %>
+              <p class="innerStyle"><%= day.morning.event %></p>
+            <% } %>
           </div>
-        <% } %>
-      </div>
-      <div class="calendar">
-        <% const daysOfWeek = ["Pazartesi", "Salı", "Çarşamba", "Perşembe", "Cuma", "Cumartesi", "Pazar"]; %>
-        <% daysOfWeek.forEach(dayName => { %>
-          <% const day = days.find(d => d.title === dayName) || {}; %>
-          <div class="day">
-            <h5><%= dayName %></h5>
-            <div class="day-part">
-              <span class="spanStyle">Sabah</span>
-              <% if(day.morning && day.morning.event) { %>
-                <p><%= day.morning.event %></p>
-              <% } %>
-            </div>
-            <div class="day-part">
-              <span class="spanStyle">Öğlen Yemeği</span>
-              <% if(day.afternoon && day.afternoon.event) { %>
-                <p><%= day.afternoon.event %></p>
-              <% } %>
-            </div>
-            <div class="day-part">
-              <span class="spanStyle">Akşam Üstü</span>
-              <% if(day.evening && day.evening.event) { %>
-                <p><%= day.evening.event %></p>
-              <% } %>
-            </div>
+          <div class="day-part">
+            <span class="spanStyle">Öğlen Yemeği</span>
+            <% if(day.afternoon && day.afternoon.event) { %>
+              <p class="innerStyle"><%= day.afternoon.event %></p>
+            <% } %>
           </div>
-        <% }); %>
-      </div>
+          <div class="day-part">
+            <span class="spanStyle">İkindi Yemeği</span>
+            <% if(day.evening && day.evening.event) { %>
+              <p class="innerStyle"><%= day.evening.event %></p>
+            <% } %>
+          </div>
+        </div>
+      <% }); %>
     </div>
   </div>
+</div>
+
+
 
   <!-- Modals for Duyurular -->
   <% duyurular.forEach(duyuru => { %>
@@ -226,8 +313,6 @@
               <option value="Çarşamba">Çarşamba</option>
               <option value="Perşembe">Perşembe</option>
               <option value="Cuma">Cuma</option>
-              <option value="Cumartesi">Cumartesi</option>
-              <option value="Pazar">Pazar</option>
             </select>
             <select name="time" required>
               <option value="morning">Sabah</option>
