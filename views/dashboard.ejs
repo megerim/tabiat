@@ -160,7 +160,11 @@
             <% } else if (user.role === 'admin') { %>
               <h2>Yönetim Paneli</h2>
             <% } %>
+            <% if (user.role === 'student') { %>
+              <h4>Hoşgeldiniz sayın velimiz.</h4>
+              <% } else { %>
             <h4>Hoşgeldiniz, <%= user.name %></h4>
+            <% } %>
           </div>
         </div>
       </div>
