@@ -148,7 +148,7 @@
 
 <main>
   <!-- Dashboard Title Area -->
-  <section class="dashboard-title-area pt-150 pb-120 pt-md-100 pb-md-70 pt-xs-100 pb-xs-70">
+  <section class="dashboard-title-area pt-150 pb-50 pt-md-100 pb-md-70 pt-xs-100 pb-xs-50">
     <div class="container">
       <div class="row justify-content-center">
         <div class="col-xl-8 col-lg-9">
@@ -186,25 +186,10 @@
       <% } %>
   </div>
 
-  <!-- Duyurular Section -->
-  <div class="container duyurular">
-    <h5>Duyurular</h5>
-    <% const latestDuyurular = duyurular.slice(-3).reverse(); %>
-    <% latestDuyurular.forEach(duyuru => { %>
-      <p data-toggle="modal" data-target="#duyuruModal-<%= duyuru._id %>">
-        <%= duyuru.text.length > 170 ? duyuru.text.substring(0, 170) + '...' : duyuru.text %>
-      </p>
-    <% }); %>
-    <div class="action-buttons">
-      <button class="btn btn-outline-primary" data-toggle="modal" data-target="#allDuyurularModal">Daha Fazla Göster</button>
-      <% if (user.role === 'admin') { %>
-        <button class="btn btn-outline-success" data-toggle="modal" data-target="#addDuyuruModal">Duyuru Ekle</button>
-      <% } %>
-    </div>
-  </div>
+  
 
  
-  <!-- Calendar Section -->
+<!-- Calendar Section -->
 <div class="container">
   <div class="">
     <div class="d-flex justify-content-between align-items-center pb-50 pt-50">
@@ -212,8 +197,7 @@
       <% if (user.role === 'admin') { %>
         <!-- Add Event Button -->
         <div>
-          <button class="btn btn-outline-success" data-toggle="modal" data-target="#addEventModal">Ekle</button>
-          <button class="btn btn-outline-warning" data-toggle="modal" data-target="#addEventModal">Düzenle</button>
+          <button class="btn btn-outline-success d-none" data-toggle="modal" data-target="#addEventModal">Ekle</button>
         </div>
       <% } %>
     </div>
@@ -223,31 +207,46 @@
         <% const day = days.find(d => d.title === dayName) || {}; %>
         <div class="day">
           <div class="dayBG">
-          <h5><%= dayName %></h5>
-        </div>
-          <div class="day-part">
-            <span class="spanStyle">Sabah Kahvaltısı</span>
-            <% if(day.morning && day.morning.event) { %>
-              <p class="innerStyle"><%= day.morning.event %></p>
-            <% } %>
+            <h5><%= dayName %></h5>
           </div>
-          <div class="day-part">
-            <span class="spanStyle">Öğlen Yemeği</span>
-            <% if(day.afternoon && day.afternoon.event) { %>
-              <p class="innerStyle"><%= day.afternoon.event %></p>
-            <% } %>
-          </div>
-          <div class="day-part">
-            <span class="spanStyle">İkindi Kahvaltısı</span>
-            <% if(day.evening && day.evening.event) { %>
-              <p class="innerStyle"><%= day.evening.event %></p>
-            <% } %>
-          </div>
+          <% ["morning", "afternoon", "evening"].forEach(time => { %>
+            <div class="day-part" 
+                 data-day="<%= dayName %>" 
+                 data-time="<%= time %>" 
+                 data-event="<%= day[time] ? day[time].event : '' %>">
+              <span class="spanStyle">
+                <% if(time === 'morning') { %>Sabah Kahvaltısı<% } else if(time === 'afternoon') { %>Öğlen Yemeği<% } else { %>İkindi Kahvaltısı<% } %>
+              </span>
+              <% if(day[time] && day[time].event) { %>
+                <p class="innerStyle"><%= day[time].event %></p>
+              <% } else { %>
+                <p class="innerStyle">-</p>
+              <% } %>
+            </div>
+          <% }); %>
         </div>
       <% }); %>
     </div>
   </div>
 </div>
+
+<!-- Duyurular Section -->
+<div class="container duyurular">
+  <h5>Duyurular</h5>
+  <% const latestDuyurular = duyurular.slice(-3).reverse(); %>
+  <% latestDuyurular.forEach(duyuru => { %>
+    <p data-toggle="modal" data-target="#duyuruModal-<%= duyuru._id %>">
+      <%= duyuru.text.length > 170 ? duyuru.text.substring(0, 170) + '...' : duyuru.text %>
+    </p>
+  <% }); %>
+  <div class="action-buttons">
+    <button class="btn btn-outline-primary" data-toggle="modal" data-target="#allDuyurularModal">Daha Fazla Göster</button>
+    <% if (user.role === 'admin') { %>
+      <button class="btn btn-outline-success" data-toggle="modal" data-target="#addDuyuruModal">Duyuru Ekle</button>
+    <% } %>
+  </div>
+</div>
+
 
 
 
@@ -300,36 +299,31 @@
   </div>
 
   <!-- Add Event Modal -->
-  <div class="modal fade" id="addEventModal" tabindex="-1" role="dialog" aria-labelledby="addEventModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="addEventModalLabel">Takvim Yönetimi</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <form action="/week" method="POST">
-            <select name="day" required>
-              <option value="Pazartesi">Pazartesi</option>
-              <option value="Salı">Salı</option>
-              <option value="Çarşamba">Çarşamba</option>
-              <option value="Perşembe">Perşembe</option>
-              <option value="Cuma">Cuma</option>
-            </select>
-            <select name="time" required>
-              <option value="morning">Sabah</option>
-              <option value="afternoon">Öğleden Sonra</option>
-              <option value="evening">Akşam Üstü</option>
-            </select>
-            <input type="text" name="event" placeholder="Açıklama giriniz..." required>
-            <button type="submit" class="btn btn-outline-success">Ekle</button>
-          </form>
-        </div>
+<div class="modal fade" id="addEventModal" tabindex="-1" role="dialog" aria-labelledby="addEventModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title"><span id="modalTitle">Takvim Yönetimi</span></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form id="eventForm" action="/week" method="POST">
+          <input type="hidden" name="_method" value="PUT" id="formMethod"> <!-- For method override -->
+          <input type="hidden" name="day" id="formDay">
+          <input type="hidden" name="time" id="formTime">
+          
+          <div class="form-group">
+            <label for="eventDescription">Açıklama</label>
+            <textarea class="form-control text-uppercase" name="event" id="eventDescription" placeholder="Açıklama giriniz..." required></textarea>
+          </div>
+          <button type="submit" class="btn btn-outline-success" id="formSubmitButton">Kaydet</button>
+        </form>
       </div>
     </div>
   </div>
+</div>
 
   <!-- Add Duyuru Modal -->
   <div class="modal fade" id="addDuyuruModal" tabindex="-1" role="dialog" aria-labelledby="addDuyuruModalLabel" aria-hidden="true">
@@ -483,6 +477,49 @@
       var duyuruId = $(this).data('id');
       $('#allDuyurularModal').modal('hide');
       $('#duyuruModal-' + duyuruId).modal('show');
+    });
+  });
+</script>
+<!-- Include jQuery and Bootstrap JS before this script -->
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const dayParts = document.querySelectorAll(".day-part");
+    const addEventModal = $('#addEventModal');
+    const form = document.getElementById("eventForm");
+    const modalTitle = document.getElementById("modalTitle");
+    const formMethod = document.getElementById("formMethod");
+    const formDay = document.getElementById("formDay");
+    const formTime = document.getElementById("formTime");
+    const eventDescription = document.getElementById("eventDescription");
+    const formSubmitButton = document.getElementById("formSubmitButton");
+
+    // Add Event Button Handler
+    const addButton = document.querySelector(".btn-outline-success[data-target='#addEventModal']");
+    addButton.addEventListener("click", () => {
+      modalTitle.textContent = "Yeni Etkinlik Ekle";
+      formMethod.value = "POST";
+      formDay.value = "";
+      formTime.value = "";
+      eventDescription.value = "";
+      formSubmitButton.textContent = "Ekle";
+    });
+
+    // Day Part Click Handler for Editing
+    dayParts.forEach(part => {
+      part.addEventListener("click", () => {
+        const day = part.getAttribute("data-day");
+        const time = part.getAttribute("data-time");
+        const event = part.getAttribute("data-event") || "";
+
+        modalTitle.textContent = "Öğün Düzenle";
+        formMethod.value = "PUT";
+        formDay.value = day;
+        formTime.value = time;
+        eventDescription.value = event;
+        formSubmitButton.textContent = "Kaydet";
+
+        addEventModal.modal('show');
+      });
     });
   });
 </script>

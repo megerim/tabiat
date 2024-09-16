@@ -8999,6 +8999,7 @@ input.main-search-input:-ms-input-placeholder {
   border-top: 1px solid #dee2e6;
   padding: 10px;
   height: 100px;
+  cursor: pointer;
 }
 
 
@@ -9062,4 +9063,8 @@ input.main-search-input:-ms-input-placeholder {
   color: #507836;
   font-weight: 600;
   border-bottom: #aecb3b 2px solid;
+}
+
+.text-uppercase {
+  text-transform: uppercase;
 }

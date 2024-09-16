@@ -1,3 +1,4 @@
+// models/User.js
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const Schema = mongoose.Schema;
@@ -6,6 +7,8 @@ const UserSchema = new Schema({
   name: {
     type: String,
     required: [true, "Please provide a name"],
+    lowercase: true, // Automatically convert to lowercase
+    unique: true,    // Ensure uniqueness
   },
   email: {
     type: String,
@@ -29,21 +32,25 @@ const UserSchema = new Schema({
   ],
 });
 
+// Pre-save hook to hash passwords
 UserSchema.pre("save", function (next) {
   const user = this;
   if (!user.isModified("password")) {
-    next();
+    return next();
   }
 
   bcrypt.genSalt(10, (err, salt) => {
-    if (err) next(err);
+    if (err) return next(err);
     bcrypt.hash(user.password, salt, (err, hash) => {
-      if (err) next(err);
+      if (err) return next(err);
       user.password = hash;
       next();
     });
   });
 });
+
+// Create a unique index on 'name' with Turkish collation
+UserSchema.index({ name: 1 }, { unique: true, collation: { locale: 'tr', strength: 2 } });
 
 const User = mongoose.model("User", UserSchema);
 

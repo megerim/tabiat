@@ -51,3 +51,21 @@ exports.getDays = async (req, res) => {
     });
   }
 };
+
+exports.editDay = async (req, res) => {
+  try {
+    const { day, time, event } = req.body;
+    const { id } = req.params;
+    
+    let update = {};
+    update[time] = { event };
+    
+    await Day.findByIdAndUpdate(id, { $set: update }, { new: true });
+    res.status(200).redirect("/users/dashboard");
+  } catch (error) {
+    res.status(400).json({
+      success: false,
+      error
+    });
+  }
+};
