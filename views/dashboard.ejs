@@ -310,15 +310,22 @@
       </div>
       <div class="modal-body">
         <form id="eventForm" action="/week" method="POST">
-          <input type="hidden" name="_method" value="PUT" id="formMethod"> <!-- For method override -->
+          <input type="hidden" name="_method" value="PUT" id="formMethod">
           <input type="hidden" name="day" id="formDay">
           <input type="hidden" name="time" id="formTime">
           
           <div class="form-group">
-            <label for="eventDescription">Açıklama</label>
-            <textarea class="form-control text-uppercase" name="event" id="eventDescription" placeholder="Açıklama giriniz..." required></textarea>
+            <label for="eventDescription" class="mb-2">Açıklama</label>
+            <textarea 
+              class="form-control text-uppercase" 
+              name="event" 
+              id="eventDescription" 
+              placeholder="Açıklama giriniz..." 
+              required
+              style="font-size: 1.1rem; min-height: 120px;"
+            ></textarea>
           </div>
-          <button type="submit" class="btn btn-outline-success" id="formSubmitButton">Kaydet</button>
+          <button type="submit" class="btn btn-outline-success mt-4" id="formSubmitButton">Kaydet</button>
         </form>
       </div>
     </div>
