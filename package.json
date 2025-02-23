@@ -14,7 +14,7 @@
     "ayşe",
     "öğretmen"
   ],
-  "author": "CodeChef",
+  "author": "DigitalPlus",
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^5.1.1",
