@@ -64,3 +64,58 @@
 @import 'footer';
 
 
+
+.inner-border-cta {
+    position: relative;
+    background-color: white;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    margin: 40px auto;
+    max-width: 800px;
+    
+    &::after {
+      content: '';
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      right: 10px;
+      bottom: 10px;
+      border: 2px dashed #ccc;
+      border-radius: 4px;
+      pointer-events: none;
+      z-index: 1;
+    }
+    
+    .content {
+      position: relative;
+      z-index: 2;
+    }
+    
+    h3 {
+      margin-top: 0;
+      margin-bottom: 15px;
+      color: #333;
+    }
+    
+    p {
+      margin-bottom: 20px;
+      color: #666;
+    }
+    
+    .cta-button {
+      padding: 10px 20px;
+      background-color: #4a90e2;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      
+      &:hover {
+        background-color: darken(#4a90e2, 10%);
+      }
+    }
+  }

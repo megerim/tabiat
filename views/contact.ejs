@@ -1,7 +1,10 @@
 <%- include('partials/head') %>
-
+<!-- reCAPTCHA script -->
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
 
 <main>
+
+    
     <!--page-title-area start-->
     
      <!--page-title-area end-->
@@ -15,7 +18,23 @@
                      </div>
                  </div>
                  <div class="col-xl-6 col-lg-6">
-                     
+                    <% if(flashMessages) { %>
+                        <div class="container mt-4">
+                            <div class="row">
+                                <div class="col-12">
+                                    <% if(flashMessages.success) { %>
+                                        <div class="alert alert-success">
+                                            <%= flashMessages.success %>
+                                        </div>
+                                    <% } else if(flashMessages.error){ %>
+                                        <div class="alert alert-danger">
+                                            <%= flashMessages.error %>
+                                        </div>
+                                    <% } %>
+                                </div>
+                            </div>
+                        </div>
+                    <% } %>
                      <div class="contact-form-wrapper mb-30">
                         <h2 class="mb-45">İletişim Formu</h2>
                         <form method="POST" action="/contact" class="row gx-3 comments-form contact-form">
@@ -27,11 +46,14 @@
                             </div>
                             
                             <div class="col-lg-12 mb-30">
-                                <input type="email" placeholder="Email ">
+                                <input name="email" type="email" placeholder="Email ">
                             </div>
                             <div class="col-lg-12 mb-30">
                                 <textarea name="message" id="message" cols="30" rows="10"
                                     placeholder="Mesaj"></textarea>
+                            </div>
+                            <div class="col-lg-12 mb-30">
+                                <div class="g-recaptcha" data-sitekey="<%=process.env.RECAPTCHA_SITE_KEY%>"></div>
                             </div>
                             <button type="submit" class="theme_btn message_btn mt-20">Gönder</button>
                         </form>
@@ -57,21 +79,6 @@
      <!--contact-form-area start-->
      <section class="contact-form-area pt-150 pb-120 pt-md-100 pt-xs-100 pb-md-70 pb-xs-70">
        <div class="container">
-
-           <% if(flashMessages) { %>
-
-               <% if(flashMessages.success) { %>
-                   <div class="alert alert-success">
-                       <%= flashMessages.success %>
-                   </div>
-               <% } else if(flashMessages.error){ %>
-               <div class="alert alert-danger">
-                   <%= flashMessages.error %>
-               </div>
-                   <% } %>
-               <% } %>
-
-
 
            <div class="row align-items-center">
                <div class="col-lg-6">
@@ -116,6 +123,42 @@
        </div>
    </section>
      <!--contact-form-area end-->
+     
+     <!-- early-registration-area start -->
+     <section id="erkenKayit" class="contact-us-area pt-150 pb-120 pt-md-100 pt-xs-100 pb-md-70 pb-xs-70">
+         <div class="container">
+             <div class="row align-items-center">
+                 <div class="col-xl-6 col-lg-6">
+                     <div class="contact-img mb-30">
+                        <img class="img-fluid" src="/img/contact/bg3.png" alt="early registration image">
+                     </div>
+                 </div>
+                 <div class="col-xl-6 col-lg-6">
+                     <div class="contact-form-wrapper mb-30">
+                        <h2 class="mb-45">2025-2026 ERKEN KAYIT FIRSATI</h2>
+                        
+                        <form method="POST" action="/early-registration" class="row gx-3 comments-form contact-form">
+                            <div class="col-lg-12 mb-30">
+                                <input name="fullname" type="text" placeholder="İsim Soyisim">
+                            </div>
+                            <div class="col-lg-12 mb-30">
+                                <input name="phone" type="tel" placeholder="İletişim Numarası">
+                            </div>
+                            <div class="col-lg-12 mb-30">
+                                <textarea name="message" cols="30" rows="10" placeholder="Mesajınız"></textarea>
+                            </div>
+                            <div class="col-lg-12 mb-30">
+                                <div class="g-recaptcha" data-sitekey="<%=process.env.RECAPTCHA_SITE_KEY%>"></div>
+                            </div>
+                            <button type="submit" class="theme_btn message_btn mt-20">Kayıt Ol</button>
+                        </form>
+                    </div>
+                 </div>
+             </div>
+         </div>
+     </section>
+     <!-- early-registration-area end -->
+     
       <!-- subscribe-area start -->
       <section class="subscribe-area footer-bg border-bot pt-100 pb-50 pt-md-90 pt-xs-90">
        <div class="container">

@@ -16,5 +16,6 @@ router.route("/galeri").get(pageController.getGaleriPage);
 router.route("/contact").get(pageController.getContactPage);
 router.route("/newblog").get(pageController.getNewBlogPage);
 router.route("/contact").post(pageController.sendEmail);
+router.route("/early-registration").post(pageController.handleEarlyRegistration);
 
 module.exports = router;
